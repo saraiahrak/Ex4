@@ -27,7 +27,7 @@ public:
     ~FileCacheManager() = default;
 
     void foreach(const function<void(string &)> f) override {
-        for (string problem: keyList) {
+        for (const string& problem: keyList) {
             string solution = myCache[problem].first;
             f(solution);
         }

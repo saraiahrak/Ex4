@@ -1,9 +1,8 @@
 //
 // Created by dekel on 14/01/2020.
 //
-
-#include <thread>
 #include "MySerialServer.h"
+#include <thread>
 
 using namespace std;
 

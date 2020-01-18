@@ -4,16 +4,19 @@
 
 #ifndef EX4_MYSERIALSERVER_H
 #define EX4_MYSERIALSERVER_H
-#include "ClientHandler.h"
-#include "ServerSide.h"
 #include <netinet/in.h>
+#include "ServerSide.h"
 #include <sys/socket.h>
 #include <unistd.h>
+
+
+//class Server;
 
 /**
  * Class MySerialServer
  * Inherites from ServerSide
  * */
+
 class MySerialServer : public server_side::Server {
 public:
 

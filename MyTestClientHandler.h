@@ -5,7 +5,7 @@
 #ifndef EX4_MYTESTCLIENTHANDLER_H
 #define EX4_MYTESTCLIENTHANDLER_H
 
-#include "MySerialServer.h"
+#include "ClientHandler.h"
 #include "CacheManager.h"
 #include "Solver.h"
 
