@@ -1,0 +1,15 @@
+//
+// Created by dekel on 15/01/2020.
+//
+
+#ifndef EX4__MYCLIENTHANDLER_H_
+#define EX4__MYCLIENTHANDLER_H_
+
+class MyClientHandler : public ClientHandler {
+ public:
+
+  void readFromClient(int clientSocket);
+};
+
+
+#endif //EX4__MYCLIENTHANDLER_H_
