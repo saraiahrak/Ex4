@@ -12,11 +12,6 @@ using namespace std;
 class Searchable {
  public:
   //current location structure of the current row, column and distance from the source
-  static struct CurrentNode {
-    int row;
-    int column;
-    int dist;
-  };
 
   virtual bool isValid(int row, int col) = 0;
 

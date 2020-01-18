@@ -6,6 +6,8 @@
 
 using namespace std;
 
+bool MySerialServer::isStop;
+
 MySerialServer::MySerialServer() {
     MySerialServer::isStop = false;
 }
@@ -50,7 +52,7 @@ void MySerialServer::open(int p, ClientHandler *c) {
 //Open the server socket
 void MySerialServer::start(int socketfd, sockaddr_in address, ClientHandler *c) {
     //listen to port
-    while (!isStop) {
+    while (!MySerialServer::isStop) {
         if (listen(socketfd, 5) == -1) {
             cerr << "Error during listening command" << endl;
         } else {
@@ -60,9 +62,9 @@ void MySerialServer::start(int socketfd, sockaddr_in address, ClientHandler *c) 
         setTimeOut(socketfd);
         // accepting a client
         int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
-        while (client_socket < 0) {
+        if (client_socket == -1) {
             cerr << "Error accepting client, trying again" << endl;
-            client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
+//            client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
         }
 
         // close(socketfd);

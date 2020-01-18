@@ -22,8 +22,8 @@ void MyTestClientHandler::handleClient(int clientSocket) {
         //if values is not empty in the beginning of the iteration- clear to receive new values
         if (!problem.empty()) {
             problem.clear();
-            current = "";
-            solution = "";
+            current.clear();
+            solution.clear();
         }
 
         char buffer[1] = {0};

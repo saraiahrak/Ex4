@@ -28,11 +28,11 @@ public:
 
 //    void setServerSocket(int s);
 
-    void open(int p, ClientHandler *c);
+    void open(int p, ClientHandler *c) override;
 
     static void start(int socketfd, sockaddr_in address, ClientHandler *c);
 
-    void stop();
+    void stop() override;
 
     static void setTimeOut(int socketfd);
 

@@ -5,10 +5,11 @@
 #ifndef EX4__MYCLIENTHANDLER_H_
 #define EX4__MYCLIENTHANDLER_H_
 
-class MyClientHandler : public ClientHandler {
- public:
+#include "ClientHandler.h"
 
-  void readFromClient(int clientSocket);
+class MyClientHandler : public ClientHandler {
+public:
+    void readFromClient(int clientSocket);
 };
 
 
