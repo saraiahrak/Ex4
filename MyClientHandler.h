@@ -9,7 +9,7 @@
 
 class MyClientHandler : public ClientHandler {
 public:
-    void readFromClient(int clientSocket);
+    void handleClient(int clientSocket);
 };
 
 
