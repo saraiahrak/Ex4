@@ -45,8 +45,10 @@ void MySerialServer::open(int p, ClientHandler *c) {
     }
 
     //reading from client in separate thread
-    thread serverThread(start, socketfd, address, c);
-    serverThread.detach();
+    start(socketfd, address, c);
+
+    //thread serverThread(start, socketfd, address, c);
+    //serverThread.detach();
 }
 
 //Open the server socket
@@ -62,9 +64,9 @@ void MySerialServer::start(int socketfd, sockaddr_in address, ClientHandler *c) 
         setTimeOut(socketfd);
         // accepting a client
         int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
-        if (client_socket == -1) {
+        if (client_socket < 0) {
             cerr << "Error accepting client, trying again" << endl;
-//            client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
+            //client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
         }
 
         // close(socketfd);
@@ -72,7 +74,7 @@ void MySerialServer::start(int socketfd, sockaddr_in address, ClientHandler *c) 
         cout << "connected to client" << endl;
         c->handleClient(client_socket);
     }
-    close(socketfd); //closing the listening socket
+    //close(socketfd); //closing the listening socket
 }
 
 void MySerialServer::stop() {
