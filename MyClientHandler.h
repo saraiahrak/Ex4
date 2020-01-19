@@ -6,10 +6,18 @@
 #define EX4__MYCLIENTHANDLER_H_
 
 #include "ClientHandler.h"
+#include "CacheManager.h"
+#include "Solver.h"
+#include "MySerialServer.h"
 
 class MyClientHandler : public ClientHandler {
 public:
-    void handleClient(int clientSocket);
+  CacheManager *cacheManager;
+  Solver<string, string> *solver;
+
+  MyClientHandler(CacheManager *c, Solver<string, string> *s);
+
+  void handleClient(int clientSocket) override;
 };
 
 

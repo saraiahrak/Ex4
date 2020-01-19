@@ -8,6 +8,7 @@
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include "Solver.h"
+#include "MySerialServer.h"
 
 class MyTestClientHandler : public ClientHandler {
 public:

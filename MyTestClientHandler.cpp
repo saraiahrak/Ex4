@@ -3,7 +3,6 @@
 //
 
 #include "MyTestClientHandler.h"
-#include "MySerialServer.h"
 #include <vector>
 
 using namespace std;
