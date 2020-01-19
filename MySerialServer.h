@@ -23,6 +23,8 @@ public:
     //local client socket
     static bool isStop;
 
+    int socketfd;
+
     //Constructor
     MySerialServer();
 
@@ -36,9 +38,9 @@ public:
 
     static void setTimeOut(int socketfd);
 
-    void setStop();
+    static void setStop();
 
-
+  void setSocket(int socket);
 };
 
 
