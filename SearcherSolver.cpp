@@ -5,6 +5,7 @@
 #include <cstring>
 #include "SearcherSolver.h"
 #include "Searchable.h"
+#include "Searcher.h"
 #include "Matrix.h"
 
 SearcherSolver::SearcherSolver(Searcher* searcher) {

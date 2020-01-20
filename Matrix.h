@@ -5,31 +5,37 @@
 #ifndef EX4__MATRIX_H_
 #define EX4__MATRIX_H_
 
+
+#include <vector>
+#include "Cell.h"
 #include "Searchable.h"
 
-class Matrix : public Searchable {
+using namespace std;
+
+
+class Matrix : Searchable<Cell *> {
 public:
+    Matrix(vector<vector<int>> mat);
 
-    vector<vector<int>> matrix;
-    int row;
-    int column;
+    void initMatrix(vector<vector<int>> mat);
 
-    static struct CurrentNode {
-        int row;
-        int column;
-        int dist;
-    };
+    int getRowNum();
 
-    Matrix(vector<vector<int>> matrix);
+    int getColNum();
+
+    vector<vector<Cell *>> getMatrix();
 
     bool isInRange(int row, int col);
 
     bool isUnBlocked(int row, int col);
 
-    virtual vector<vector<int>> getMatrix() = 0;
+    ~Matrix() = default;
 
-    virtual pair<int, int> getCell() = 0;
-
+private:
+    int rows;
+    int cols;
+    vector<vector<Cell *>> matrix;
 };
+
 
 #endif //EX4__MATRIX_H_

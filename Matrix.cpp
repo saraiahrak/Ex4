@@ -4,15 +4,45 @@
 
 #include "Matrix.h"
 
-struct CurrentNode;
+//struct CurrentNode;
 
-//constructor for the matrix graph
-Matrix::Matrix(vector<vector<int>> matrix) {
-    this->matrix = matrix;
-    this->row = matrix.size();
-    this->column = matrix[0].size();
+
+Matrix::Matrix(vector<vector<int>> mat) {
+    this->rows = mat.size();
+    this->cols = mat.at(0).size();
+    initMatrix(mat);
 }
 
+void Matrix::initMatrix(vector<vector<int> > mat) {
+    vector<vector<Cell *>> cells;
+    vector<Cell *> cellRow;
+    int rowIndex = 0;
+    int colIndex = 0;
+    for (const vector<int> &row : mat) {
+        for (int val : row) {
+            cellRow.push_back(new Cell(pair<int, int>(rowIndex, colIndex), val));
+            colIndex++;
+        }
+        cells.push_back(cellRow);
+        cellRow.clear();
+        colIndex = 0;
+        rowIndex++;
+    }
+
+    this->matrix = cells;
+}
+
+vector<vector<Cell *> > Matrix::getMatrix() {
+    return this->matrix;
+}
+
+int Matrix::getColNum() {
+    return this->cols;
+}
+
+int Matrix::getRowNum() {
+    return this->rows;
+}
 
 //checks if the point is in the matrix range and returns true if in range, otherwise false
 bool Matrix::isInRange(int r, int c) {
@@ -23,16 +53,4 @@ bool Matrix::isInRange(int r, int c) {
 //checks if the point is unblocked and returns true if unblocked, otherwise false
 bool Matrix::isUnBlocked(int r, int c) {
     return (matrix[r][c] != -1);
-}
-
-
-//returns all the possible states
-vector<vector<int>> Matrix::getMatrix() {
-    return this->matrix;
-}
-
-
-//returns the state
-pair<int, int> Matrix::getCell() {
-    return {this->row, this->column};
 }

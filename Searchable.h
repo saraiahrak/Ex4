@@ -1,26 +1,24 @@
 //
-// Created by dekel on 18/01/2020.
+// Created by sarai on 20/01/2020.
 //
 
-#ifndef EX4__SEARCHABLE_H_
-#define EX4__SEARCHABLE_H_
+#ifndef EX4_SEARCHABLE1_H
+#define EX4_SEARCHABLE1_H
 
+#include "State.h"
 #include <vector>
 
 using namespace std;
 
+template<typename T>
+
 class Searchable {
- public:
-  //current location structure of the current row, column and distance from the source
+public:
+    virtual State<T> *getInitialState() = 0;
 
-  virtual bool isValid(int row, int col) = 0;
+    virtual bool isGoalState(State<T> *s) = 0;
 
-  virtual bool isUnBlocked(int row, int col) = 0;
-
-  virtual vector<vector<int>> getAllPossibleStates() = 0;
-
-  virtual pair<int, int> getInitialState() = 0;
-
+    virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) = 0;
 };
 
-#endif //EX4__SEARCHABLE_H_
+#endif //EX4_SEARCHABLE1_H
