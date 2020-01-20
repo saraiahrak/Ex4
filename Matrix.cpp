@@ -4,13 +4,22 @@
 
 #include "Matrix.h"
 
-//struct CurrentNode;
-
-
 Matrix::Matrix(vector<vector<int>> mat) {
     this->rows = mat.size();
     this->cols = mat.at(0).size();
+    setInitialState(createInitialState());
+    setDestState(createDestState());
     initMatrix(mat);
+}
+
+State<Cell *> *Matrix::createInitialState() {
+    auto *state = new State<Cell *>(new Cell(pair<int, int>(0, 0), 0));
+    return state;
+}
+
+State<Cell *> *Matrix::createDestState() {
+    auto *state = new State<Cell *>(new Cell(pair<int, int>(rows - 1, cols - 1), 0));
+    return state;
 }
 
 void Matrix::initMatrix(vector<vector<int> > mat) {
@@ -32,6 +41,53 @@ void Matrix::initMatrix(vector<vector<int> > mat) {
     this->matrix = cells;
 }
 
+bool Matrix::isGoalState(State<Cell *> *s) {
+    return s->isEqual(this->destCell);
+}
+
+Cell *Matrix::getCell(int row, int col) {
+    return this->matrix.at(row).at(col);
+}
+
+vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState) {
+
+    vector<State<Cell *> *> neighbors;
+    int row = currentState->getStateStruct()->getRowPos();
+    int col = currentState->getStateStruct()->getColPos();
+
+    if (col < this->cols - 1) {
+        neighbors.push_back(new State<Cell *>(getCell(row, col + 1)));
+    }
+    if (col > 0) {
+        neighbors.push_back(new State<Cell *>(getCell(row, col - 1)));
+    }
+    if (row < this->rows - 1) {
+        neighbors.push_back(new State<Cell *>(getCell(row + 1, col)));
+    }
+    if (row > 0) {
+        neighbors.push_back(new State<Cell *>(getCell(row - 1, col)));
+    }
+
+    return neighbors;
+}
+
+State<Cell *> *Matrix::getInitialState() {
+    return this->initCell;
+}
+
+void Matrix::setInitialState(State<Cell *> *s) {
+    this->initCell = s;
+}
+
+void Matrix::setNewSearch(State<Cell *> *entry, State<Cell *> *dest) {
+    setInitialState(entry);
+    setDestState(dest);
+}
+
+void Matrix::setDestState(State<Cell *> *s) {
+    this->destCell = s;
+}
+
 vector<vector<Cell *> > Matrix::getMatrix() {
     return this->matrix;
 }
@@ -46,11 +102,11 @@ int Matrix::getRowNum() {
 
 //checks if the point is in the matrix range and returns true if in range, otherwise false
 bool Matrix::isInRange(int r, int c) {
-    return (r >= 0) && (r < this->row) && (c >= 0) && (c < this->column);
+    return (r >= 0) && (r < this->rows) && (c >= 0) && (c < this->cols);
 }
 
 
 //checks if the point is unblocked and returns true if unblocked, otherwise false
 bool Matrix::isUnBlocked(int r, int c) {
-    return (matrix[r][c] != -1);
+    return (matrix.at(r).at(c)->getValue() != -1);
 }

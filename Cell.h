@@ -16,9 +16,13 @@ public:
 
     pair<int, int> getPosition();
 
+    int getValue();
+
     int getRowPos();
 
     int getColPos();
+
+    bool isEqual(Cell* c);
 
     ~Cell() = default;
 
@@ -26,7 +30,6 @@ private:
     pair<int, int> position;
 
     int value;
-
 
 };
 

@@ -15,10 +15,18 @@ pair<int, int> Cell::getPosition() {
     return position;
 }
 
+int Cell::getValue() {
+    return this->value;
+}
+
 int Cell::getRowPos() {
     return this->position.first;
 }
 
 int Cell::getColPos() {
     return this->position.second;
+}
+
+bool Cell::isEqual(Cell *c) {
+    return c->getPosition() == this->getPosition();
 }

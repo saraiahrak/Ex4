@@ -19,6 +19,7 @@ public:
     virtual bool isGoalState(State<T> *s) = 0;
 
     virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) = 0;
+
 };
 
 #endif //EX4_SEARCHABLE1_H

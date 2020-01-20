@@ -12,7 +12,7 @@ template<class T>
 class State {
 public:
     explicit State<T>(T st) {
-        this->stateInfo = st;
+        this->value = st;
     }
 
     ~State() = default;
@@ -29,10 +29,15 @@ public:
         this->prev = s;
     }
 
-private:
+    bool isEqual(State<T> *s) {
+        return value.isEqual(s->value);
+    }
+
     T getStateStruct() {
         return this->state;
     }
+
+private:
 
     int cost;
 
@@ -40,7 +45,7 @@ private:
 
     State<T> *prev;
 
-    T stateInfo;
+    T value;
 
 };
 

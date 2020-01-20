@@ -9,6 +9,9 @@
 
 template<typename S, typename T>
 
+
+//the algorithms should set the trailcost when choosing a next state, set prev etc.
+
 class Searcher {
     virtual S search(Searchable<T> *searchable) = 0;
 };
