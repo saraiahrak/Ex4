@@ -4,7 +4,7 @@
 
 #include "Matrix.h"
 
-struct Matrix::CurrentNode;
+struct CurrentNode;
 
 //constructor for the matrix graph
 Matrix::Matrix(vector<vector<int>> matrix) {
@@ -15,7 +15,7 @@ Matrix::Matrix(vector<vector<int>> matrix) {
 
 
 //checks if the point is in the matrix range and returns true if in range, otherwise false
-bool Matrix::isValid(int r, int c) {
+bool Matrix::isInRange(int r, int c) {
     return (r >= 0) && (r < this->row) && (c >= 0) && (c < this->column);
 }
 
@@ -27,12 +27,12 @@ bool Matrix::isUnBlocked(int r, int c) {
 
 
 //returns all the possible states
-vector<vector<int>> Matrix::getAllPossibleStates() {
+vector<vector<int>> Matrix::getMatrix() {
     return this->matrix;
 }
 
 
 //returns the state
-pair<int, int> Matrix::getInitialState() {
+pair<int, int> Matrix::getCell() {
     return {this->row, this->column};
 }

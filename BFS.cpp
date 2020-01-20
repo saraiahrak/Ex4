@@ -3,7 +3,6 @@
 //
 
 #include "BFS.h"
-#include "Searchable.h"
 #include <string>
 #include <vector>
 #include <queue>
@@ -65,11 +64,11 @@ string BFS::findPath(vector<vector<pair<int, int>>> graph, pair<int, int> dest) 
 
 
 //finds the parent links trace the shortest path back to root
-string BFS::search(Searchable *state, pair<int, int> source, pair<int, int> destination) {
-    vector<vector<int>> matrix = state->getAllPossibleStates();
+string BFS::search(Matrix *m, pair<int, int> source, pair<int, int> destination) {
+    vector<vector<int>> matrix = m->getMatrix();
     int rows, cols;
-    rows = state->getInitialState().first;
-    cols = state->getInitialState().second;
+    rows = m->getCell().first;
+    cols = m->getCell().second;
 
     //boolean that checks if the point was visited before
     bool visited[rows][cols];
@@ -93,17 +92,17 @@ string BFS::search(Searchable *state, pair<int, int> source, pair<int, int> dest
 
     //initialize the source
     parents[source.first][source.second] = {source.first, source.second};
-    State::CurrentNode src = {source.first, source.second, 0};
+    Matrix::CurrentNode src = {source.first, source.second, 0};
 
     //BFS algorithm
-    queue<Searchable::CurrentNode> q;
+    queue<Matrix::CurrentNode> q;
     q.push(src);
     //mark that visited
     visited[src.row][src.column] = true;
 
     //while the queue isn't empty
     while (!q.empty()) {
-        Searchable::CurrentNode p = q.front();
+        Matrix::CurrentNode p = q.front();
         q.pop();
 
         //if p equal to the destination point
@@ -118,13 +117,13 @@ string BFS::search(Searchable *state, pair<int, int> source, pair<int, int> dest
         for (int k = 0; k < 4; k++) {
             int i = p.row + rowDirection[k];
             int j = p.column + colDirection[k];
-            if (state->isValid(i, j) && state->isUnBlocked(i, j) && !visited[i][j]) {
+            if (m->isInRange(i, j) && m->isUnBlocked(i, j) && !visited[i][j]) {
                 q.push({i, j, p.dist + matrix[i][j]});
                 visited[i][j] = true;
                 parents[i][j] = {p.row, p.column};
             }
         }
     }
-    return "Path doesn't found";
+    return "Path didn't found";
 }
 

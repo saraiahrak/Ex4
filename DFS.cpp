@@ -3,7 +3,6 @@
 //
 
 #include "DFS.h"
-#include "Searchable.h"
 #include <string>
 #include <vector>
 #include <stack>
@@ -66,11 +65,11 @@ string DFS::findPath(vector<vector<pair<int, int>>> graph, pair<int, int> dest) 
 
 
 //finds the parent links trace the shortest path back to root
-string DFS::search(Searchable *state, pair<int, int> source, pair<int, int> destination) {
-    vector<vector<int>> matrix = state->getAllPossibleStates();
+string DFS::search(Matrix *m, pair<int, int> source, pair<int, int> destination) {
+    vector<vector<int>> matrix = m->getMatrix();
     int rows, cols;
-    rows = state->getInitialState().first;
-    cols = state->getInitialState().second;
+    rows = m->getCell().first;
+    cols = m->getCell().second;
 
     //boolean that checks if the point was visited before
     bool visited[rows][cols];
@@ -94,10 +93,10 @@ string DFS::search(Searchable *state, pair<int, int> source, pair<int, int> dest
 
     //initialize the source
     parents[source.first][source.second] = {source.first, source.second};
-    State::CurrentNode src = {source.first, source.second, 0};
+    Matrix::CurrentNode src = {source.first, source.second, 0};
 
     //DFS algorithm
-    stack<Searchable::CurrentNode> s;
+    stack<Matrix::CurrentNode> s;
     s.push(src);
 
     //mark that visited
@@ -105,7 +104,7 @@ string DFS::search(Searchable *state, pair<int, int> source, pair<int, int> dest
 
     //while the stack isn't empty
     while (!s.empty()) {
-        Searchable::CurrentNode p = s.top();
+      Matrix::CurrentNode p = s.top();
 
         //if p equal to the destination point
         if (p.row == destination.first && p.column == destination.second) {
@@ -121,7 +120,7 @@ string DFS::search(Searchable *state, pair<int, int> source, pair<int, int> dest
         for (int k = 0; k < 4; k++) {
             int i = p.row + rowDirection[k];
             int j = p.column + colDirection[k];
-            if (state->isValid(i, j) && state->isUnBlocked(i, j) && !visited[i][j]) {
+            if (m->isInRange(i, j) && m->isUnBlocked(i, j) && !visited[i][j]) {
                 s.push({i, j, p.dist + matrix[i][j]});
                 visited[i][j] = true;
                 parents[i][j] = {p.row, p.column};
@@ -134,5 +133,5 @@ string DFS::search(Searchable *state, pair<int, int> source, pair<int, int> dest
             s.pop();
         }
     }
-    return "Path doesn't found";
+    return "Path didn't found";
 }

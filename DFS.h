@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include "Searchable.h"
+#include "Matrix.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ class DFS : public Searcher<vector<vector<int>>> {
  public:
   DFS();
   string findPath(vector<vector<pair<int, int>>> parentIndex, pair<int, int> dest);
-  string search(Searchable* state, pair<int, int> source, pair<int, int> destination);
+  string search(Matrix* m, pair<int, int> source, pair<int, int> destination);
 };
 
 #endif //EX4__DFS_H_

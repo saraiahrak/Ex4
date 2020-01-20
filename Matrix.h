@@ -22,13 +22,13 @@ public:
 
     Matrix(vector<vector<int>> matrix);
 
-    bool isValid(int row, int col);
+    bool isInRange(int row, int col);
 
     bool isUnBlocked(int row, int col);
 
-    virtual vector<vector<int>> getAllPossibleStates() = 0;
+    virtual vector<vector<int>> getMatrix() = 0;
 
-    virtual pair<int, int> getInitialState() = 0;
+    virtual pair<int, int> getCell() = 0;
 
 };
 
