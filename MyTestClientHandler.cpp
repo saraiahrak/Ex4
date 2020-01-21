@@ -3,7 +3,6 @@
 //
 
 #include "MyTestClientHandler.h"
-#include <vector>
 
 using namespace std;
 
@@ -14,16 +13,9 @@ MyTestClientHandler::MyTestClientHandler(CacheManager *cm, Solver<string, string
 
 //reads the information sent from the server
 void MyTestClientHandler::handleClient(int clientSocket) {
-  vector<string> problem;
-  string current;
+  string problem;
   string solution;
   while (!MySerialServer::isStop) {
-    //if values is not empty in the beginning of the iteration- clear to receive new values
-    if (!problem.empty()) {
-      problem.clear();
-      current.clear();
-      solution.clear();
-    }
 
     char buffer[1];
     int valread = read(clientSocket, buffer, 1);
@@ -32,26 +24,22 @@ void MyTestClientHandler::handleClient(int clientSocket) {
     }
     //reads information that ends with new line, each value seperated by comma
     while (buffer[0] != '\n') {
-      current += buffer[0];
+      problem += buffer[0];
       valread = read(clientSocket, buffer, 1);
     }
-    //insert last value
-    if (!current.empty()) {
-      problem.push_back(current);
-    }
     //end the communication when received "end"
-    if (current == "end\r") {
+    if (problem == "end\r") {
       close(clientSocket);
       break;
     }
     //search or solve the solution
     try {
-      solution = cacheManager->getSolution(current);
+      solution = cacheManager->getSolution(problem);
     } catch (const char *e) {
       //solve the new problem
-      solution = solver->solve(current);
+      solution = solver->solve(problem);
       //insert the new problem and his solution to the cache manager
-      cacheManager->insert(current, solution);
+      cacheManager->insert(problem, solution);
     }
 
     //sending the solution to the client

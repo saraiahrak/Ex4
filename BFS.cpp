@@ -15,12 +15,13 @@ BFS::BFS() {}
 
 //trace the path from the source to destination
 string BFS::findPath(vector<vector<pair<int, int>>> graph, pair<int, int> dest) {
-    int row, col, fatherRow, fatherCol;
+    int row, col, fatherRow, fatherCol, vertexCounter = 0;
     row = dest.first;
     col = dest.second;
 
     //find all the paths in the graph
     list<pair<int, int>> pathList;
+
     while (!(graph[row][col].first == row && graph[row][col].second == col)) {
         pathList.push_front(make_pair(row, col));
         int tempRow = graph[row][col].first;
@@ -53,22 +54,31 @@ string BFS::findPath(vector<vector<pair<int, int>>> graph, pair<int, int> dest) 
             path += "Right, ";
         }
 
+        //count the vertex that were visited
+        vertexCounter += 1;
+
         fatherRow = it->first;
         fatherCol = it->second;
     }
 
-    //erase the destination
+    //erase the space and "," in the end og the path
     path.erase(path.end() - 2, path.end());
     return path;
 }
 
 
 //finds the parent links trace the shortest path back to root
-string BFS::search(Matrix *m, pair<int, int> source, pair<int, int> destination) {
-    vector<vector<int>> matrix = m->getMatrix();
-    int rows, cols;
-    rows = m->getCell().first;
-    cols = m->getCell().second;
+string BFS::search(Searchable<Matrix> *state) {
+
+
+  //string search(Matrix *m, pair<int, int> source, pair<int, int> destination);
+    int rows, cols, destRow, destCol;
+    //get the size of the matrix
+    rows = state.getInitialState()->getStateStruct().getStateStruct()->getRowNum();
+    cols = state.getInitialState()->getStateStruct().getStateStruct()->getColNum();
+    //get the destination
+    destRow = state.
+
 
     //boolean that checks if the point was visited before
     bool visited[rows][cols];
