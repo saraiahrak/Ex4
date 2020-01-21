@@ -13,7 +13,7 @@
 using namespace std;
 
 
-class Matrix : Searchable<Cell *> {
+class Matrix : public Searchable<Cell *> {
 public:
     Matrix(vector<vector<int>> mat);
 
