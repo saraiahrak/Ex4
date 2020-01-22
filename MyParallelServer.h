@@ -5,33 +5,38 @@
 //#ifndef EX4__MYPARALLELSERVER_H_
 //#define EX4__MYPARALLELSERVER_H_
 //
-//#include "MyTestClientHandler.h"
-//#include "Server.h"
+//#include "ServerSide.h"
 //#include <netinet/in.h>
+//#include <sys/socket.h>
+//#include <unistd.h>
 //
 //using namespace std;
 //
-//class MyParallelServer : public Server {
+//class MyParallelServer : public server_side::Server {
 //
 // public:
 //
+//  static bool isStop;
 //  //local client socket
-//  static int socketfd;
+//  int socketfd;
+//  //count the clients
 //  static int counter;
-//  static bool stop;
 //
 //  //Constructor
 //  MyParallelServer();
 //
-//  void setServerSocket(int s);
+//  void open(int p, ClientHandler *c) override;
 //
-//  static void openServerSocket(int p);
+//  void start(int socketfd, sockaddr_in address, ClientHandler *c);
 //
-//  void start(int socketfd, sockaddr_in address, ClientHandler* c);
+//  void stop() override;
 //
-//  void setTimeOut();
+//  static void setTimeOut(int socketfd);
 //
-//  void setStop();
+//  static void setStop();
+//
+//  void setSocket(int socket);
+//  static void handle(int client_socket, ClientHandler *c);
 //};
 //
 //#endif //EX4__MYPARALLELSERVER_H_

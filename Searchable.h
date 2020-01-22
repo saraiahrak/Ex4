@@ -7,6 +7,7 @@
 
 #include "State.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 

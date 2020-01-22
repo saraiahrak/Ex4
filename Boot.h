@@ -9,6 +9,7 @@
 #include "StringReverser.h"
 #include "FileCacheManager.h"
 #include "MyClientHandler.h"
+#include "MyTestClientHandler.h"
 #include "ObjectAdapter.h"
 #include "BFS.h"
 
@@ -20,10 +21,10 @@ namespace boot {
         void main(int port) {
 
             server_side::Server *server = new MySerialServer();
-            Solver<string, string> *solver = new ObjectAdapter(new BFS<string, Cell *>());
+            Solver<string, string> *solver = new ObjectAdapter(new BFS<Cell*>());
             CacheManager *file = new FileCacheManager(5);
             ClientHandler* clientHandler = new MyClientHandler(file, solver);
-//
+
 //            //creates new server
 //            server_side::Server *server = new MySerialServer();
 //            //creates a new solver

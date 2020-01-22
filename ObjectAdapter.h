@@ -13,13 +13,16 @@ using namespace std;
 
 class ObjectAdapter : public Solver<string, string> {
 public:
+    string initial;
+    string dest;
+
     ObjectAdapter(Searcher<string, Cell *> *s);
 
     Searcher<string, Cell *> *searcher;
 
-    static Matrix *createSearchable(string problem);
+    Matrix *createSearchable(string problem);
 
-    static vector<vector<int>> createVector(string problem);
+    vector<vector<int>> createVector(string problem);
 
     string solve(string problem) override;
 

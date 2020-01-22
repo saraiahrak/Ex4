@@ -50,6 +50,7 @@ void MySerialServer::open(int p, ClientHandler *c) {
   thread serverThread(start, socketfd, address, c);
   serverThread.join();
   stop();
+
 }
 
 //Open the server socket
@@ -65,12 +66,14 @@ void MySerialServer::start(int socketfd, sockaddr_in address, ClientHandler *c) 
     }
     // accepting a client
     int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
-    if (client_socket < 0) {
-      if (EWOULDBLOCK) {
+    while (client_socket < 0) {
+      if (errno == EWOULDBLOCK | errno == EAGAIN) {
         cerr << "Time out" << endl;
         setStop();
         break;
       }
+      cout << "couldn't connected to client, try again..." << endl;
+      client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
     }
     cout << "connected to client" << endl;
     c->handleClient(client_socket);
