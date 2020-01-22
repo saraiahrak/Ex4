@@ -17,7 +17,7 @@ void MyTestClientHandler::handleClient(int clientSocket) {
   string solution;
   while (!MySerialServer::isStop) {
 
-    char buffer[1];
+    char buffer[1] = {0};
     int valread = read(clientSocket, buffer, 1);
     if (valread < 0) {
       continue;
@@ -44,10 +44,12 @@ void MyTestClientHandler::handleClient(int clientSocket) {
 
     //sending the solution to the client
     int is_sent = write(clientSocket, solution.c_str(), solution.length());
-    while (is_sent == -1) {
+    while (is_sent < 0) {
       //Error sending message- trying again
       cout << "Error sending message" << endl;
       is_sent = write(clientSocket, solution.c_str(), solution.length());
     }
+    solution.clear();
+    problem.clear();
   }
 }

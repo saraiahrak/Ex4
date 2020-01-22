@@ -20,15 +20,14 @@
 class MySerialServer : public server_side::Server {
 public:
 
-    //local client socket
     static bool isStop;
 
+    //local client socket
     int socketfd;
 
     //Constructor
     MySerialServer();
 
-//    void setServerSocket(int s);
 
     void open(int p, ClientHandler *c) override;
 
@@ -40,7 +39,7 @@ public:
 
     static void setStop();
 
-  void setSocket(int socket);
+    void setSocket(int socket);
 };
 
 

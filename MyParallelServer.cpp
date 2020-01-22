@@ -8,43 +8,36 @@
 //#include <sys/socket.h>
 //#include <iostream>
 //#include <netinet/in.h>
-//#include <vector>
-//#include <fstream>
 //#include <thread>
-//#include "MySerialServer.h"
-//#include "MyTestClientHandler.h"
 //
 //using namespace std;
 //
 //MyParallelServer::MyParallelServer() {
-//  this->stop = false;
+//  this->isStop = false;
+//  this->counter = 0;
 //}
 //
 ////Set the server socket after creation
 //void MyParallelServer::setStop() {
-//  MyParallelServer::stop = true;
+//  MyParallelServer::isStop = true;
 //}
 //
-////Set the server socket after creation
-//void MyParallelServer::setServerSocket(int s) {
-//  MyParallelServer::socketfd = s;
-//}
-//
-//void MyParallelServer::setTimeOut() {
+//void MyParallelServer::setTimeOut(int socketfd) {
 //  timeval timeout;
 //  timeout.tv_sec = 120;
 //  timeout.tv_usec = 0;
-//  setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+//  setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
 //}
 //
 ////opens the server
-//void MyParallelServer::openServerSocket(int p, ClientHandler* c) {
+//void MyParallelServer::open(int p, ClientHandler* c) {
 //  //create socket
 //  int socketfd = socket(AF_INET, SOCK_STREAM, 0);
 //  if (socketfd == -1) {
 //    //error creating socket
 //    cerr << "Could not create a socket" << endl;
 //  }
+//  setSocket(socketfd);
 //
 //  //bind socket to IP address
 //  sockaddr_in address;
@@ -57,40 +50,59 @@
 //    cerr << "Could not bind the socket to an IP" << endl;
 //  }
 //
-//  //reading from client in separate thread
-//  thread serverThread(start, socketfd, address, c);
-//  serverThread.detach();
+//  if (listen(socketfd, 5) < 0) {
+//    cerr << "Error during listening command" << endl;
+//  } else {
+//    cout << "Server is now listening ..." << endl;
+//  }
+//  //start to accept clients
+//  this->start(socketfd, address, c);
 //}
 //
 ////Open the server socket
 //void MyParallelServer::start(int socketfd, sockaddr_in address, ClientHandler* c) {
+//  //set the time for waiting to client
+//  setTimeOut(socketfd);
 //  //listen to port
-//  this->counter = 0;
-//  while (!stop) {
-//    if (listen(socketfd, 5) == -1) {
-//      cerr << "Error during listening command" << endl;
-//    } else {
-//      cout << "Server is now listening ..." << endl;
-//    }
-//    //set the time for waiting to client
-//    setTimeOut();
+//  while (!MyParallelServer::isStop) {
 //    // accepting a client
 //    int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
-//    while (client_socket < 0) {
+//    if (client_socket < 0) {
+//      if (errno == EWOULDBLOCK || errno == EAGAIN) {
+//        cerr << "Time out" << endl;
+//        setStop();
+//        break;
+//      }
 //      cerr << "Error accepting client, trying again" << endl;
-//      client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
 //    }
 //
-//    //close(socketfd);
-//
-//    this->counter++;
-//
+//    MyParallelServer::counter += 1;
 //    cout << "connected to client" << endl;
-//    c->handleClient(client_socket);
-//    c = new ClientHandler();
-//    thread???
 //
 //
+//    //reading from client in separate thread
+////    pthread_t handle;
+////    pthread_create(&handle, nullptr, &MyParallelServer::handle, client_socket, *c);
+//
+//    thread serverThread(handle, client_socket, c);
+//    serverThread.join();
+//
+//    if (MyParallelServer::counter == 0) {
+//      stop();
+//    }
 //  }
-//  close(socketfd); //closing the listening socket
+//}
+//
+//
+//void MyParallelServer::stop() {
+//  close(this->socketfd);
+//}
+//
+//void MyParallelServer::setSocket(int socket) {
+//  this->socketfd = socket;
+//}
+//
+//void MyParallelServer::handle(int client_socket, ClientHandler* c) {
+//  c->handleClient(client_socket);
+//  MyParallelServer::counter -= 1;
 //}
