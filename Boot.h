@@ -11,7 +11,7 @@
 #include "MyClientHandler.h"
 #include "MyTestClientHandler.h"
 #include "ObjectAdapter.h"
-#include "BFS.h"
+#include "BestFirstSearch.h"
 
 namespace boot {
     class Main {
@@ -21,7 +21,7 @@ namespace boot {
         void main(int port) {
 
             server_side::Server *server = new MySerialServer();
-            Solver<string, string> *solver = new ObjectAdapter(new BFS<Cell*>());
+            Solver<string, string> *solver = new ObjectAdapter(new BestFirstSearch<Cell*>());
             CacheManager *file = new FileCacheManager(5);
             ClientHandler* clientHandler = new MyClientHandler(file, solver);
 

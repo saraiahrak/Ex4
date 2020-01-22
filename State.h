@@ -12,6 +12,8 @@ class State {
 public:
     explicit State<T>(T st) {
         this->value = st;
+        this->trailCost = 0;
+        this->cost = 0;
         this->prev = nullptr;
     }
 
