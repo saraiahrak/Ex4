@@ -4,8 +4,8 @@
 //
 
 #include "MyClientHandler.h"
+#include "Utils.h"
 #include <string>
-#include <vector>
 #include <unistd.h>
 #include <iostream>
 
@@ -24,16 +24,13 @@ void MyClientHandler::handleClient(int clientSocket) {
   bool endFlag = false;
 
   while (!MySerialServer::isStop) {
-    //if values is not empty in the beggining of the iteration- clear to receive new values
-    if (!problem.empty()) {
-      problem.clear();
-      current.clear();
-      solution.clear();
-    }
-
     //reads information that ends with new line and separate it into vector of strings
     while (!endFlag) {
-      char buffer[1];
+      //clear
+      current.clear();
+      solution.clear();
+      //initial buffer
+      char buffer[1] = {0};
       int valread = read(clientSocket, buffer, 1);
       if (valread < 0) {
         continue;
@@ -44,16 +41,17 @@ void MyClientHandler::handleClient(int clientSocket) {
         valread = read(clientSocket, buffer, 1);
       }
 
-//      //insert last value
-//      if (!problem.empty()) {
-//        problem.push_back(current);
-//      }
-
       //end the communication when received "end"
-      if (current == "end\r") {
+      size_t pos = current.find("end");
+      if (pos != string::npos) {
+        if (problem.empty()) {
+          exit(-1);
+        }
+
         endFlag = true;
         break;
       }
+      current = Utils::strip(current);
       problem += current + "\n";
     }
 

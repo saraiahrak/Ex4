@@ -31,7 +31,7 @@ string Utils::rstrip(string s) {
     s.erase(s.end() - 1);
   }
 
-  while (s.at(s.length() - 1) == '\n') {
+  while (s.at(s.length() - 1) == '\n' || s.at(s.length() - 1) == '\r') {
     s.erase(s.end() - 1);
   }
   return s;

@@ -111,7 +111,7 @@ class BFS : public Searcher<string, T> {
     //get the initial cell
     q.push(searchable->getInitialState());
     //insert the start point to the visited list
-    visited.push_back(searchable->getInitialState());
+    //visited.push_back(searchable->getInitialState());
 
     while (!q.empty()) {
       current = q.front();

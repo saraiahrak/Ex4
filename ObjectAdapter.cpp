@@ -20,7 +20,8 @@ Matrix *ObjectAdapter::createSearchable(string matrix) {
   vector<string> initialVec = Utils::splitByDelim(this->initial, ",");
   vector<string> destlVec = Utils::splitByDelim(this->dest, ",");
 
-  m->setNewSearch(stoi(initialVec[0]), stoi(initialVec[1]), stoi(destlVec[0]), stoi(destlVec[1]));
+  m->setNewSearch(stoi(initialVec[0]), stoi(initialVec[1]),
+      stoi(destlVec[0]), stoi(destlVec[1]));
   return m;
 }
 
