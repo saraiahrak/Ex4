@@ -11,6 +11,7 @@
 #include "MyClientHandler.h"
 #include "MyTestClientHandler.h"
 #include "ObjectAdapter.h"
+//#include "BestFirstSearch.h"
 #include "BFS.h"
 
 namespace boot {

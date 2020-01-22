@@ -5,12 +5,12 @@
 #ifndef EX4_BESTFIRSTSEARCH_H
 #define EX4_BESTFIRSTSEARCH_H
 
-#include <queue>
-#include <list>
 #include "State.h"
 #include "Searcher.h"
-#include <string>
 #include "StateComparator.h"
+#include <string>
+#include <list>
+#include <queue>
 
 
 using namespace std;
@@ -144,6 +144,7 @@ public:
         }
     }
 
+    ~BestFirstSearch() = default;
 };
 
 #endif //EX4_BESTFIRSTSEARCH_H
