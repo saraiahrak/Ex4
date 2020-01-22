@@ -13,6 +13,7 @@ class State {
 public:
     explicit State<T>(T st) {
         this->value = st;
+        this->prev = nullptr;
     }
 
     ~State() = default;
@@ -29,6 +30,15 @@ public:
         this->prev = s;
     }
 
+
+    void setDistance(int x) {
+      this->distance = x;
+    }
+
+    State<T> getPrev() {
+      return this->prev;
+    }
+
     bool isEqual(State<T> *s) {
         return value.isEqual(s->value);
     }
@@ -37,11 +47,17 @@ public:
         return this->state;
     }
 
+    Cell GetCell() {
+      return this->value;
+    }
+
 private:
 
     int cost;
 
     int trailCost;
+
+    int distance;
 
     State<T> *prev;
 
