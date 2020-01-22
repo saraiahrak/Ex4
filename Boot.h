@@ -12,7 +12,7 @@
 #include "MyTestClientHandler.h"
 #include "ObjectAdapter.h"
 //#include "BestFirstSearch.h"
-#include "BFS.h"
+#include "DFS.h"
 
 namespace boot {
     class Main {
@@ -22,7 +22,7 @@ namespace boot {
         void main(int port) {
 
             server_side::Server *server = new MySerialServer();
-            Solver<string, string> *solver = new ObjectAdapter(new BFS<Cell*>());
+            Solver<string, string> *solver = new ObjectAdapter(new DFS<Cell*>());
             CacheManager *file = new FileCacheManager(5);
             ClientHandler* clientHandler = new MyClientHandler(file, solver);
 
