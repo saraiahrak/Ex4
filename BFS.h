@@ -6,6 +6,7 @@
 #define EX4__BFS_H_
 
 #include "Searchable.h"
+#include "Searcher.h"
 #include "Matrix.h"
 #include <vector>
 #include <string>
@@ -59,8 +60,8 @@ class BFS : public Searcher<S, T> {
     string path = nullptr;
 
     State<T> *current = pathVector.end();
-    int row = current->GetCell().getRowPos();
-    int col = current->GetCell().getColPos();
+    int row = current->getValue().getRowPos();
+    int col = current->getValue().getColPos();
 
     //iterator
     auto it = pathVector.end() - 1;
@@ -68,29 +69,29 @@ class BFS : public Searcher<S, T> {
     //finds the direction for the path
     for (it; it != pathVector.begin(); it--) {
       State<T> *next = *it;
-      while (row < next->GetCell().getRowPos()) {
-        if (current->GetCell().getRowPos().isEqual(next->GetCell().getRowPos())) {
+      while (row < next->getValue().getRowPos()) {
+        if (current->getValue().getRowPos().isEqual(next->getValue().getRowPos())) {
           break;
         }
         path += "Down, ";
         row += 1;
       }
-      while (row > next->GetCell().getRowPos()) {
-        if (current->GetCell().getRowPos().isEqual(next->GetCell().getRowPos())) {
+      while (row > next->getValue().getRowPos()) {
+        if (current->getValue().getRowPos().isEqual(next->getValue().getRowPos())) {
           break;
         }
         path += "Up, ";
         row -= 1;
       }
-      while (col < next->GetCell().getColPos()) {
-        if (current->GetCell().getColPos().isEqual(next->GetCell().getColPos())) {
+      while (col < next->getValue().getColPos()) {
+        if (current->getValue().getColPos().isEqual(next->getValue().getColPos())) {
           break;
         }
         path += "Right, ";
         col += 1;
       }
-      while (col > next->GetCell().getColPos()) {
-        if (current->GetCell().getColPos().isEqual(next->GetCell().getColPos())) {
+      while (col > next->getValue().getColPos()) {
+        if (current->getValue().getColPos().isEqual(next->getValue().getColPos())) {
           break;
         }
         path += "Left, ";
@@ -98,8 +99,8 @@ class BFS : public Searcher<S, T> {
       }
 
       current = it;
-      row = current->GetCell().getRowPos();
-      col = current->GetCell().getColPos();
+      row = current->getValue().getRowPos();
+      col = current->getValue().getColPos();
     }
 
     //erase the space and "," in the end og the path

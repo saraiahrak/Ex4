@@ -11,19 +11,19 @@
 
 using namespace std;
 
-class ObjectAdapter : public Solver<vector<vector<int>>, string> {
+class ObjectAdapter : public Solver<string, string> {
 public:
     ObjectAdapter(Searcher<string, Cell *> *s);
 
     Searcher<string, Cell *> *searcher;
 
-    static Matrix *createSearchable(vector<vector<int>> mat);
+    static Matrix *createSearchable(string problem);
 
-    string solve(vector<vector<int>> problem) override;
+    static vector<vector<int>> createVector(string problem);
+
+    string solve(string problem) override;
 
     ~ObjectAdapter() = default;
-
-
 };
 
 #endif //EX4_OBJECTADAPTER_H

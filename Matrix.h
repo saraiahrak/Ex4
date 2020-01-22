@@ -47,6 +47,8 @@ public:
 
     bool isUnBlocked(int row, int col);
 
+    string to_string();
+
     ~Matrix() = default;
 
 private:

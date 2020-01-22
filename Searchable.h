@@ -20,6 +20,8 @@ public:
 
     virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) = 0;
 
+    virtual string to_string() = 0;
+
 };
 
 #endif //EX4_SEARCHABLE1_H

@@ -52,8 +52,8 @@ Cell *Matrix::getCell(int row, int col) {
 vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState) {
 
     vector<State<Cell *> *> neighbors;
-    int row = currentState->getStateStruct()->getRowPos();
-    int col = currentState->getStateStruct()->getColPos();
+    int row = currentState->getValue()->getRowPos();
+    int col = currentState->getValue()->getColPos();
 
     if (col < this->cols - 1) {
         neighbors.push_back(new State<Cell *>(getCell(row, col + 1)));
@@ -109,4 +109,23 @@ bool Matrix::isInRange(int r, int c) {
 //checks if the point is unblocked and returns true if unblocked, otherwise false
 bool Matrix::isUnBlocked(int r, int c) {
     return (matrix.at(r).at(c)->getValue() != -1);
+}
+
+string Matrix::to_string() {
+    string mat = "";
+    int index = 0;
+    for (vector<Cell *> row : this->matrix) {
+        for (Cell *cell: row) {
+            string val = std::to_string(cell->getValue());
+            mat += val;
+            if (index < row.size() - 1) {
+                mat += ",";
+            }
+            index++;
+        }
+        mat += "\n";
+        index = 0;
+    }
+
+    return mat;
 }
