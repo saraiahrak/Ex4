@@ -8,27 +8,35 @@
 #include "MySerialServer.h"
 #include "StringReverser.h"
 #include "FileCacheManager.h"
-#include "MyTestClientHandler.h"
+#include "MyClientHandler.h"
+#include "ObjectAdapter.h"
+#include "BFS.h"
 
 namespace boot {
-class Main {
- public:
-  Main() {}
+    class Main {
+    public:
+        Main() {}
 
-  void main(int port) {
-    //creates new server
-    server_side::Server *server = new MySerialServer();
-    //creates a new solver
-    Solver<string, string> *solver = new StringReverser();
-    //creates cache manager file
-    CacheManager *file = new FileCacheManager(5);
-    //creates new handler
-    ClientHandler *clientHandler = new MyTestClientHandler(file, solver);
+        void main(int port) {
 
-    //open the connection and solve problems
-    server->open(port, clientHandler);
-  }
-};
+            server_side::Server *server = new MySerialServer();
+            Solver<string, string> *solver = new ObjectAdapter(new BFS<string, Cell *>());
+            CacheManager *file = new FileCacheManager(5);
+            ClientHandler* clientHandler = new MyClientHandler(file, solver);
+//
+//            //creates new server
+//            server_side::Server *server = new MySerialServer();
+//            //creates a new solver
+//            Solver<string, string> *solver = new StringReverser();
+//            //creates cache manager file
+//            CacheManager *file = new FileCacheManager(5);
+//            //creates new handler
+//            ClientHandler *clientHandler = new MyTestClientHandler(file, solver);
+
+            //open the connection and solve problems
+            server->open(port, clientHandler);
+        }
+    };
 }
 
 #endif //EX4__BOOT_H_

@@ -10,10 +10,11 @@
 #include <string>
 #include "Searchable.h"
 #include "Matrix.h"
+#include "Searcher.h"
 
 using namespace std;
 
-template<class T>
+template<typename S, typename T>
 class BFS : public Searcher<S, T> {
  public:
   BFS();

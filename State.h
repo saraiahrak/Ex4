@@ -33,8 +33,20 @@ public:
         return value.isEqual(s->value);
     }
 
-    T getStateStruct() {
-        return this->state;
+    T getValue() {
+        return this->value;
+    }
+
+    int getCost() {
+        return this->cost;
+    }
+
+    int getTrailCost() {
+        return this->trailCost;
+    }
+
+    State<T> *getPrev() {
+        return this->prev;
     }
 
 private:
