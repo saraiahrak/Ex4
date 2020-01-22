@@ -25,20 +25,26 @@ State<Cell *> *Matrix::createDestState() {
 void Matrix::initMatrix(vector<vector<int> > mat) {
     vector<vector<Cell *>> cells;
     vector<Cell *> cellRow;
+    vector<vector<State<Cell *> *>> allStates;
+    vector<State<Cell *> *> rowStates;
     int rowIndex = 0;
     int colIndex = 0;
     for (const vector<int> &row : mat) {
         for (int val : row) {
             cellRow.push_back(new Cell(pair<int, int>(rowIndex, colIndex), val));
+            rowStates.push_back(new State<Cell *>(cellRow.at(colIndex)));
             colIndex++;
         }
         cells.push_back(cellRow);
+        allStates.push_back(rowStates);
         cellRow.clear();
+        rowStates.clear();
         colIndex = 0;
         rowIndex++;
     }
 
     this->matrix = cells;
+    this->states = allStates;
 }
 
 bool Matrix::isGoalState(State<Cell *> *s) {
@@ -56,16 +62,16 @@ vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState
     int col = currentState->getValue()->getColPos();
 
     if (col < this->cols - 1) {
-        neighbors.push_back(new State<Cell *>(getCell(row, col + 1)));
+        neighbors.push_back(this->getState(row, col + 1));
     }
     if (col > 0) {
-        neighbors.push_back(new State<Cell *>(getCell(row, col - 1)));
+        neighbors.push_back(this->getState(row, col - 1));
     }
     if (row < this->rows - 1) {
-        neighbors.push_back(new State<Cell *>(getCell(row + 1, col)));
+        neighbors.push_back(this->getState(row + 1, col));
     }
     if (row > 0) {
-        neighbors.push_back(new State<Cell *>(getCell(row - 1, col)));
+        neighbors.push_back(this->getState(row - 1, col));
     }
 
     return neighbors;
@@ -128,4 +134,8 @@ string Matrix::to_string() {
     }
 
     return mat;
+}
+
+State<Cell *> *Matrix::getState(int row, int col) {
+    return this->states.at(row).at(col);
 }

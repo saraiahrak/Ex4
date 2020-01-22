@@ -6,6 +6,7 @@
 #define EX4_CELL_H
 
 #include <iostream>
+#include "State.h"
 
 
 using namespace std;
@@ -22,7 +23,7 @@ public:
 
     int getColPos();
 
-    bool isEqual(Cell* c);
+    bool isEqual(Cell *c);
 
     ~Cell() = default;
 
@@ -30,7 +31,6 @@ private:
     pair<int, int> position;
 
     int value;
-
 };
 
 #endif //EX4_CELL_H

@@ -41,7 +41,7 @@ public:
 
     vector<State<Cell *> *> getAllPossibleStates(State<Cell *> *currentState) override;
 
-    Cell* getCell(int row, int col);
+    Cell *getCell(int row, int col);
 
     bool isInRange(int row, int col);
 
@@ -51,10 +51,13 @@ public:
 
     ~Matrix() = default;
 
+    State<Cell*> * getState(int row, int col);
+
 private:
     int rows;
     int cols;
     vector<vector<Cell *>> matrix;
+    vector<vector<State<Cell *> *>> states;
     State<Cell *> *initCell;
     State<Cell *> *destCell;
 };

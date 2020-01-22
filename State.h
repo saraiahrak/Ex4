@@ -5,7 +5,6 @@
 #ifndef EX4_STATE_H
 #define EX4_STATE_H
 
-#include "Cell.h"
 
 template<class T>
 
@@ -40,7 +39,7 @@ public:
     }
 
     bool isEqual(State<T> *s) {
-        return value.isEqual(s->value);
+        return value->isEqual(s->value);
     }
 
     T getValue() {
