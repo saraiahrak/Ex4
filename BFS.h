@@ -59,38 +59,22 @@ public:
         //finds the direction for the path
         for (i = pathVector.size() - 2; i >= 0; i--) {
             State<T> next = pathVector.at(i);
-            while (row < next.getValue()->getRowPos()) {
-                if (current.getValue()->getRowPos() == next.getValue()->getRowPos()) {
-                    break;
-                }
+            if (row < next.getValue()->getRowPos()) {
                 //string cost = current.getValue();
                 path += "Down (" + to_string(current.getCost() + trailCost) + "), ";
                 trailCost += current.getCost();
-                row += 1;
             }
-            while (row > next.getValue()->getRowPos()) {
-                if (current.getValue()->getRowPos() == next.getValue()->getRowPos()) {
-                    break;
-                }
+            if (row > next.getValue()->getRowPos()) {
                 path += "Up (" + to_string(current.getCost() + trailCost) + "), ";
                 trailCost += current.getCost();
-                row -= 1;
             }
-            while (col < next.getValue()->getColPos()) {
-                if (current.getValue()->getColPos() == next.getValue()->getColPos()) {
-                    break;
-                }
+            if (col < next.getValue()->getColPos()) {
                 path += "Right (" + to_string(current.getCost() + trailCost) + "), ";
                 trailCost += current.getCost();
-                col += 1;
             }
-            while (col > next.getValue()->getColPos()) {
-                if (current.getValue()->getColPos() == next.getValue()->getColPos()) {
-                    break;
-                }
+            if (col > next.getValue()->getColPos()) {
                 path += "Left (" + to_string(current.getCost() + trailCost) + "), ";
                 trailCost += current.getCost();
-                col -= 1;
             }
 
             current = next;
