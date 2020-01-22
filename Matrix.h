@@ -25,19 +25,15 @@ public:
 
     vector<vector<Cell *>> getMatrix();
 
-    void setInitialState(State<Cell *> *s);
+    void setInitialState(int row, int col);
 
-    void setDestState(State<Cell *> *s);
-
-    static State<Cell *> *createInitialState();
-
-    State<Cell *> *createDestState();
+    void setDestState(int row, int col);
 
     State<Cell *> *getInitialState() override;
 
     bool isGoalState(State<Cell *> *s) override;
 
-    void setNewSearch(State<Cell *> *entry, State<Cell *> *dest);
+    void setNewSearch(int initRow, int initCol, int destRow, int destCol);
 
     vector<State<Cell *> *> getAllPossibleStates(State<Cell *> *currentState) override;
 
@@ -51,7 +47,7 @@ public:
 
     ~Matrix() = default;
 
-    State<Cell*> * getState(int row, int col);
+    State<Cell *> *getState(int row, int col);
 
 private:
     int rows;

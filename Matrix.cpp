@@ -7,19 +7,9 @@
 Matrix::Matrix(vector<vector<int>> mat) {
     this->rows = mat.size();
     this->cols = mat.at(0).size();
-    setInitialState(createInitialState());
-    setDestState(createDestState());
     initMatrix(mat);
-}
-
-State<Cell *> *Matrix::createInitialState() {
-    auto *state = new State<Cell *>(new Cell(pair<int, int>(0, 0), 0));
-    return state;
-}
-
-State<Cell *> *Matrix::createDestState() {
-    auto *state = new State<Cell *>(new Cell(pair<int, int>(rows - 1, cols - 1), 0));
-    return state;
+    setInitialState(0, 0);
+    setDestState(rows - 1, cols - 1);
 }
 
 void Matrix::initMatrix(vector<vector<int> > mat) {
@@ -81,17 +71,17 @@ State<Cell *> *Matrix::getInitialState() {
     return this->initCell;
 }
 
-void Matrix::setInitialState(State<Cell *> *s) {
-    this->initCell = s;
+void Matrix::setInitialState(int row, int col) {
+    this->initCell = getState(row, col);
 }
 
-void Matrix::setNewSearch(State<Cell *> *entry, State<Cell *> *dest) {
-    setInitialState(entry);
-    setDestState(dest);
+void Matrix::setNewSearch(int initRow, int initCol, int destRow, int destCol) {
+    setInitialState(initRow, initCol);
+    setDestState(destRow, destCol);
 }
 
-void Matrix::setDestState(State<Cell *> *s) {
-    this->destCell = s;
+void Matrix::setDestState(int row, int col) {
+    this->destCell = getState(row, col);
 }
 
 vector<vector<Cell *> > Matrix::getMatrix() {
