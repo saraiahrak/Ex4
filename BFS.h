@@ -34,60 +34,66 @@ class BFS : public Searcher<string, T> {
 
 
   //return the direction for the best path
-  string findPath(list<State<T>*> visited, State<T> *dest) {
+  string findPath(list<State<T>*> visited, State<T> *dest, Searchable<T> *searchable) {
     vector<State<T>> pathVector;
     //insert the destination cell to the path vector
     pathVector.push_back(*dest);
-    State<T> *prev = dest->getPrev();
 
     //find the path by the previous node of each vertex
-    while (prev != nullptr) {
+    State<T> *prev = dest->getPrev();
+    while (!prev->isEqual(searchable->getInitialState())) {
       pathVector.push_back(*prev);
       *prev = *prev->getPrev();
     }
+    pathVector.push_back(*prev);
+
     //initialize the solution to be empty
     string path = "";
 
-    State<T> current = *pathVector.end();
+    State<T> current = pathVector.at(pathVector.size() - 1);
     int row = current.getValue()->getRowPos();
     int col = current.getValue()->getColPos();
 
-    //iterator
-    auto it = pathVector.end() - 1;
-
+    int i;
+    int trailCost = 0;
     //finds the direction for the path
-    for (it; it != pathVector.begin(); it--) {
-      State<T> next = *it;
+    for (i = pathVector.size() - 2; i >= 0; i--) {
+      State<T> next = pathVector.at(i);
       while (row < next.getValue()->getRowPos()) {
         if (current.getValue()->getRowPos() == next.getValue()->getRowPos()) {
           break;
         }
-        path += "Down, ";
+        //string cost = current.getValue();
+        path += "Down (" + to_string(current.getCost() + trailCost) + "), ";
+        trailCost += current.getCost();
         row += 1;
       }
       while (row > next.getValue()->getRowPos()) {
         if (current.getValue()->getRowPos() == next.getValue()->getRowPos()) {
           break;
         }
-        path += "Up, ";
+        path += "Up (" + to_string(current.getCost() + trailCost) + "), ";
+        trailCost += current.getCost();
         row -= 1;
       }
       while (col < next.getValue()->getColPos()) {
         if (current.getValue()->getColPos() == next.getValue()->getColPos()) {
           break;
         }
-        path += "Right, ";
+        path += "Right (" + to_string(current.getCost() + trailCost) + "), ";
+        trailCost += current.getCost();
         col += 1;
       }
       while (col > next.getValue()->getColPos()) {
         if (current.getValue()->getColPos() == next.getValue()->getColPos()) {
           break;
         }
-        path += "Left, ";
+        path += "Left (" + to_string(current.getCost() + trailCost) + "), ";
+        trailCost += current.getCost();
         col -= 1;
       }
 
-      current = *it;
+      current = next;
       row = current.getValue()->getRowPos();
       col = current.getValue()->getColPos();
     }
@@ -111,10 +117,10 @@ class BFS : public Searcher<string, T> {
     //get the initial cell
     q.push(searchable->getInitialState());
     //insert the start point to the visited list
-    //visited.push_back(searchable->getInitialState());
 
     while (!q.empty()) {
       current = q.front();
+      current->setCost(current->getValue()->getValue());
       q.pop();
       if (wasVisited(current, visited)) {
         continue;
@@ -132,13 +138,16 @@ class BFS : public Searcher<string, T> {
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current);
       //for each child in expand node
       auto iter = neighbors.begin();
-      for (iter; iter != neighbors.end(); iter++) {
-        q.push(*iter);
+      for (State<T> *neighbor : neighbors) {
+        if (!wasVisited(neighbor, visited)) {
+          neighbor->setPrev(current);
+        }
+        q.push(neighbor);
       }
     }
     //find the directions of the path
     try {
-      string path = findPath(visited, current);
+      string path = findPath(visited, current, searchable);
       cout << verticesCounter << endl;
     } catch (const char *e) {
       return "Path didn't found";
