@@ -21,6 +21,8 @@ public:
 
     MyTestClientHandler(CacheManager *c, Solver<string, string> *s);
 
+    ~MyTestClientHandler() = default;
+
     void handleClient(int clientSocket) override;
 
 };

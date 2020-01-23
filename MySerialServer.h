@@ -28,6 +28,7 @@ public:
     //Constructor
     MySerialServer();
 
+    ~MySerialServer() = default;
 
     void open(int p, ClientHandler *c) override;
 

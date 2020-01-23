@@ -23,8 +23,6 @@ public:
         return new State<T>(this->value->clone());
     }
 
-    ~State() = default;
-
     void setCost(int c) {
         this->cost = c;
     }

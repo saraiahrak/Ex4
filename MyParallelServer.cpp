@@ -86,8 +86,6 @@ void MyParallelServer::start(int socketfd, sockaddr_in address, ClientHandler* c
       cerr << "Error accepting client, trying again" << endl;
     }
 
-    MyParallelServer::counter += 1;
-    cout << to_string(counter) << endl;
     cout << "connected to client" << endl;
 
     thread serverThread(handle, client_socket, c->clone());
