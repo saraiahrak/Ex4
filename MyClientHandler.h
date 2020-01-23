@@ -18,6 +18,10 @@ public:
   MyClientHandler(CacheManager *c, Solver<string, string> *s);
 
   void handleClient(int clientSocket) override;
+
+  ClientHandler* clone(){
+    return new MyClientHandler(this->cacheManager, this->solver->clone());
+  }
 };
 
 

@@ -77,3 +77,10 @@ void MyClientHandler::handleClient(int clientSocket) {
         }
     }
 }
+
+//duplicate for handle clients
+//MyClientHandler::ClientHandler* clone() {
+//  ClientHandler *handler = new MyClientHandler(this->cacheManager, this->solver);
+//  return handler;
+//}
+

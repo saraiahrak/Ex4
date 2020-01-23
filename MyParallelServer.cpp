@@ -3,6 +3,7 @@
 //
 
 #include "MyParallelServer.h"
+#include "MyClientHandler.h"
 #include <unistd.h>
 #include <string>
 #include <sys/socket.h>
@@ -71,6 +72,7 @@ void MyParallelServer::open(int p, ClientHandler* c) {
 void MyParallelServer::start(int socketfd, sockaddr_in address, ClientHandler* c) {
   //set the time for waiting to client
   setTimeOut(socketfd);
+
   //listen to port
   while (!MyParallelServer::isStop) {
     // accepting a client
@@ -85,9 +87,10 @@ void MyParallelServer::start(int socketfd, sockaddr_in address, ClientHandler* c
     }
 
     MyParallelServer::counter += 1;
+    cout << to_string(counter) << endl;
     cout << "connected to client" << endl;
 
-    thread serverThread(handle, client_socket, c);
+    thread serverThread(handle, client_socket, c->clone());
     serverThread.detach();
   }
 }

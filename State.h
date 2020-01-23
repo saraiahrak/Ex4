@@ -14,7 +14,7 @@ public:
         this->value = st;
         this->trailCost = 0;
         this->cost = 0;
-        this->heurisic = 0;
+        this->heuristic = 0;
         this->distance = 0;
         this->prev = nullptr;
     }

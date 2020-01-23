@@ -18,6 +18,11 @@ template<typename T>
 
 class BFS : public Searcher<string, T> {
 public:
+
+    BFS* clone() {
+      return new BFS();
+    }
+
     BFS<T>() = default;
 
     //search if the current cell was visited and return true, else false
@@ -88,6 +93,7 @@ public:
         if (path == "") {
             throw;
         }
+        cout << "trailCost: " + to_string(trailCost) << endl;
         return path;
     }
 
@@ -133,7 +139,7 @@ public:
         //find the directions of the path
         try {
             string path = findPath(visited, current, searchable);
-            cout << verticesCounter << endl;
+            cout << "number og vertices: " + to_string(verticesCounter) << endl;
             return path;
         } catch (const char *e) {
             return "Path didn't found";
