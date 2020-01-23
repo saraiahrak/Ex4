@@ -50,6 +50,7 @@ public:
             pathVector.push_back(*prev);
             *prev = *prev->getPrev();
         }
+        pathVector.push_back(*prev);
 
         //initialize the solution to be empty
         string path = "";
@@ -65,20 +66,20 @@ public:
             State<T> next = pathVector.at(i);
             if (row < next.getValue()->getRowPos()) {
                 //string cost = current.getValue();
-                path += "Down (" + to_string(current.getCost() + trailCost) + "), ";
-                trailCost += current.getCost();
+                path += "Down (" + to_string(next.getCost() + trailCost) + "), ";
+                trailCost += next.getCost();
             }
             if (row > next.getValue()->getRowPos()) {
-                path += "Up (" + to_string(current.getCost() + trailCost) + "), ";
-                trailCost += current.getCost();
+                path += "Up (" + to_string(next.getCost() + trailCost) + "), ";
+                trailCost += next.getCost();
             }
             if (col < next.getValue()->getColPos()) {
-                path += "Right (" + to_string(current.getCost() + trailCost) + "), ";
-                trailCost += current.getCost();
+                path += "Right (" + to_string(next.getCost() + trailCost) + "), ";
+                trailCost += next.getCost();
             }
             if (col > next.getValue()->getColPos()) {
-                path += "Left (" + to_string(current.getCost() + trailCost) + "), ";
-                trailCost += current.getCost();
+                path += "Left (" + to_string(next.getCost() + trailCost) + "), ";
+                trailCost += next.getCost();
             }
 
             current = next;
@@ -137,13 +138,14 @@ public:
         //find the directions of the path
         try {
             string path = findPath(visited, current, searchable);
-            cout << "number og vertices: " + to_string(verticesCounter) << endl;
+            cout << "number of vertices: " + to_string(verticesCounter) << endl;
             return path;
         } catch (const char *e) {
             return "Path didn't found";
         }
     }
 
+  ~DFS() = default;
 };
 
 #endif //EX4__DFS_H_

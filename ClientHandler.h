@@ -13,6 +13,8 @@ public:
     virtual void handleClient(int socket) = 0;
 
     virtual ClientHandler* clone() = 0;
+
+    virtual ~ClientHandler() = default;
 };
 
 #endif //EX4_CLIENTHANDLER_H

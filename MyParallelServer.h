@@ -31,6 +31,8 @@ class MyParallelServer : public server_side::Server {
   //Constructor
   MyParallelServer();
 
+  ~MyParallelServer() = default;
+
   void open(int p, ClientHandler *c) override;
 
   static void start(int socketfd, sockaddr_in address, ClientHandler *c);

@@ -15,6 +15,8 @@ public:
     CacheManager *cacheManager;
     Solver<string, string> *solver;
 
+    ~MyClientHandler() = default;
+
     MyClientHandler(CacheManager *c, Solver<string, string> *s);
 
     void handleClient(int clientSocket) override;

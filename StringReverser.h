@@ -17,6 +17,8 @@ public:
     //Constructor
     StringReverser();
 
+    ~StringReverser() = default;
+
     string solve(string s) override;
 
     StringReverser* clone() {
