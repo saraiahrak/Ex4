@@ -31,6 +31,10 @@ public:
 
     void setDestState(int row, int col);
 
+    void setAllHeur();
+
+    int calculateHeur(State<Cell*>* s);
+
     State<Cell *> *getInitialState() override;
 
     bool isGoalState(State<Cell *> *s) override;

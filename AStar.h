@@ -9,22 +9,36 @@
 #include <queue>
 #include "AStarComparator.h"
 
-template<typename S, typename T>
+using namespace std;
 
-class AStar : public Searcher<S, T> {
+template<typename T>
+
+class AStar : public Searcher<string, T> {
 public:
 
     priority_queue<State<T> *, vector<State<T> *>, AStarComparator<T>> open;
-    vector<State<T> *> visited;
+    vector<State<T> *> closed;
 
 
     bool isVisited(State<T> *s) {
-        for (State<T> *node : visited) {
+        for (State<T> *node : closed) {
             if (node->isEqual(s)) {
                 return true;
             }
         }
         return false;
+    }
+
+    void removeFromClosed(State<T> *s) {
+        auto it = closed.begin();
+        for (it; it != closed.end(); it++) {
+            if (s->isEqual(*it)) {
+                break;
+            }
+        }
+        if (it != closed.end()) {
+            closed.erase(it);
+        }
     }
 
     bool isInOpen(State<T> *s) {
@@ -54,7 +68,7 @@ public:
     void initialize(Searchable<T> *s) {
         State<T> *first = s->getInitialState();
         first->setCost(first->getValue()->getValue());
-        first->setHeuristic(h(first, s->getDestState()));
+        first->setTrailCost(first->getValue()->getValue());
 
         open.push(first);
     }
@@ -111,10 +125,6 @@ public:
         return dx + dy;
     }
 
-    int f(int g, int h) {
-        return g + h;
-    }
-
 
     string search(Searchable<T> *searchable) {
         State<T> *current;
@@ -124,8 +134,9 @@ public:
         int trail;
         while (!open.empty()) {
             current = open.top();
-            visited.push_back(current);
             open.pop();
+            closed.push_back(current);
+
 
             if (searchable->isGoalState(current)) {
                 return constructPath(current);
@@ -134,24 +145,26 @@ public:
             neighbors = searchable->getAllPossibleStates(current);
 
             for (State<T> *neighbor : neighbors) {
-                if (isVisited(neighbor)) {
-                    continue;
-                }
                 neighbor->setCost(neighbor->getValue()->getValue());
                 trail = current->getTrailCost() + neighbor->getCost();
-                if (!isInOpen(neighbor) && !isVisited(neighbor)) {
-                    neighbor->setPrev(current);
-                    neighbor->setTrailCost(trail);
-                    open.push(neighbor);
-                } else {
-                    if (trail < neighbor->getTrailCost()) {
-                        neighbor->setTrailCost(trail);
-                        neighbor->setPrev(current);
+                if (isInOpen(neighbor)) {
+                    if (current->getTrailCost() < trail) {
+                        continue;
                     }
+                } else if (isVisited(neighbor)) {
+                    if (current->getTrailCost() < trail) {
+                        continue;
+                    }
+                    open.push(neighbor);
+                    removeFromClosed(neighbor);
+                } else {
+                    open.push(neighbor);
                 }
+                neighbor->setTrailCost(trail);
+                neighbor->setPrev(current);
             }
-
         }
+
     }
 
     ~AStar() = default;

@@ -11,9 +11,10 @@
 #include "MyClientHandler.h"
 #include "MyTestClientHandler.h"
 #include "ObjectAdapter.h"
-//#include "BestFirstSearch.h"
-#include "DFS.h"
+#include "BestFirstSearch.h"
+//#include "DFS.h"
 #include "MyParallelServer.h"
+#include "AStar.h"
 
 namespace boot {
     class Main {
@@ -23,7 +24,7 @@ namespace boot {
         void main(int port) {
 
             server_side::Server *server = new MyParallelServer();
-            Solver<string, string> *solver = new ObjectAdapter(new DFS<Cell*>());
+            Solver<string, string> *solver = new ObjectAdapter(new AStar<Cell*>());
             CacheManager *file = new FileCacheManager(5);
             ClientHandler* clientHandler = new MyClientHandler(file, solver);
 

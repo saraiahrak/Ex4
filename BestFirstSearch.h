@@ -57,6 +57,7 @@ public:
     void initialize(Searchable<T> *s) {
         State<T> *first = s->getInitialState();
         first->setCost(first->getValue()->getValue());
+        first->setTrailCost(first->getValue()->getValue());
         open.push(first);
     }
 
