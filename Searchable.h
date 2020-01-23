@@ -23,6 +23,8 @@ public:
 
     virtual string to_string() = 0;
 
+    virtual State<T>* getDestState() = 0;
+
 };
 
 #endif //EX4_SEARCHABLE1_H

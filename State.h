@@ -14,6 +14,8 @@ public:
         this->value = st;
         this->trailCost = 0;
         this->cost = 0;
+        this->heurisic = 0;
+        this->distance = 0;
         this->prev = nullptr;
     }
 
@@ -31,13 +33,24 @@ public:
         this->prev = s;
     }
 
-
-    void setDistance(int x) {
-      this->distance = x;
+    int getHeuristic() {
+        return this->heuristic;
     }
 
-    State<T> * getPrev() {
-      return this->prev;
+    int getDistance() {
+        return this->distance;
+    }
+
+    void setHeuristic(int heur) {
+        this->heuristic = heur;
+    }
+
+    void setDistance(int x) {
+        this->distance = x;
+    }
+
+    State<T> *getPrev() {
+        return this->prev;
     }
 
     bool isEqual(State<T> *s) {
@@ -61,6 +74,8 @@ private:
     int cost;
 
     int trailCost;
+
+    int heuristic;
 
     int distance;
 

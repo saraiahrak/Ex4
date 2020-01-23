@@ -17,6 +17,8 @@ class Matrix : public Searchable<Cell *> {
 public:
     Matrix(vector<vector<int>> mat);
 
+    State<Cell *> *getDestState() override;
+
     void initMatrix(vector<vector<int>> mat);
 
     int getRowNum();

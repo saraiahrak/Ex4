@@ -54,6 +54,8 @@ public:
     void initialize(Searchable<T> *s) {
         State<T> *first = s->getInitialState();
         first->setCost(first->getValue()->getValue());
+        first->setHeuristic(h(first, s->getDestState()));
+
         open.push(first);
     }
 
@@ -103,11 +105,22 @@ public:
         return path;
     }
 
+    int h(State<T> *s, State<T> *goal) {
+        int dx = goal->getValue()->getColPos() - s->getValue()->getColPos();
+        int dy = goal->getValue()->getRowPos() - s->getValue()->getRowPos();
+        return dx + dy;
+    }
+
+    int f(int g, int h) {
+        return g + h;
+    }
+
 
     string search(Searchable<T> *searchable) {
         State<T> *current;
         initialize(searchable);
         vector<State<T> *> neighbors;
+        int value;
         int trail;
         while (!open.empty()) {
             current = open.top();

@@ -96,6 +96,10 @@ int Matrix::getRowNum() {
     return this->rows;
 }
 
+State<Cell *> *Matrix::getDestState() {
+    return this->destCell;
+}
+
 //checks if the point is in the matrix range and returns true if in range, otherwise false
 bool Matrix::isInRange(int r, int c) {
     return (r >= 0) && (r < this->rows) && (c >= 0) && (c < this->cols);
