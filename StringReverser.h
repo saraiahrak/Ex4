@@ -18,6 +18,10 @@ public:
     StringReverser();
 
     string solve(string s) override;
+
+    StringReverser* clone() {
+        return new StringReverser();
+    }
 };
 
 #endif //EX4__STRINGREVERSER_H_

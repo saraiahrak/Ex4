@@ -4,6 +4,7 @@
 //
 
 #include "MyClientHandler.h"
+#include "MySerialServer.h"
 #include "Utils.h"
 #include <string>
 #include <unistd.h>

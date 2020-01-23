@@ -19,6 +19,10 @@ public:
         this->prev = nullptr;
     }
 
+    State<T>* clone() {
+        return new State<T>(this->value->clone());
+    }
+
     ~State() = default;
 
     void setCost(int c) {

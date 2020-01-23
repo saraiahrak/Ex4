@@ -25,6 +25,8 @@ public:
 
     virtual State<T>* getDestState() = 0;
 
+    virtual Searchable<T>* clone() = 0;
+
 };
 
 #endif //EX4_SEARCHABLE1_H
