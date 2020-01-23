@@ -19,6 +19,10 @@ class DFS : public Searcher<string, T> {
 public:
   DFS<T>() = default;
 
+  DFS* clone() {
+    return new DFS();
+  }
+
 
   //search if the current cell was visited and return true, else false
   bool wasVisited(State<T> *current, list<State<T>*> visited) {
@@ -133,7 +137,7 @@ public:
     //find the directions of the path
     try {
       string path = findPath(visited, current, searchable);
-      cout << "number og vertices: " + verticesCounter << endl;
+      cout << "number og vertices: " + to_string(verticesCounter) << endl;
       return path;
     } catch (const char *e) {
       return "Path didn't found";

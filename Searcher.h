@@ -15,6 +15,8 @@ template<typename S, typename T>
 class Searcher {
 public:
     virtual S search(Searchable<T> *searchable) = 0;
+
+    virtual Searcher* clone() = 0;
 };
 
 #endif //EX4_SEARCHER_H

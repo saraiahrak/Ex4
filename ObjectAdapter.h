@@ -18,6 +18,8 @@ public:
 
     ObjectAdapter(Searcher<string, Cell *> *s);
 
+    ObjectAdapter(string i, string d);
+
     Searcher<string, Cell *> *searcher;
 
     Matrix *createSearchable(string problem);
@@ -27,6 +29,10 @@ public:
     string solve(string problem) override;
 
     ~ObjectAdapter() = default;
+
+    ObjectAdapter* clone() {
+      return new ObjectAdapter(this->initial, this->dest);
+    }
 };
 
 #endif //EX4_OBJECTADAPTER_H

@@ -5,16 +5,18 @@
 #ifndef EX4__BOOT_H_
 #define EX4__BOOT_H_
 
-#include "MySerialServer.h"
-#include "StringReverser.h"
+//#include "MySerialServer.h"
+//#include "StringReverser.h"
+//#include "MyTestClientHandler.h"
 #include "FileCacheManager.h"
 #include "MyClientHandler.h"
-#include "MyTestClientHandler.h"
-#include "ObjectAdapter.h"
-#include "BestFirstSearch.h"
-//#include "DFS.h"
 #include "MyParallelServer.h"
+#include "ObjectAdapter.h"
+#include "Solver.h"
+#include "BestFirstSearch.h"
 #include "AStar.h"
+#include "BFS.h"
+#include "DFS.h"
 
 namespace boot {
     class Main {
@@ -24,7 +26,7 @@ namespace boot {
         void main(int port) {
 
             server_side::Server *server = new MyParallelServer();
-            Solver<string, string> *solver = new ObjectAdapter(new AStar<Cell*>());
+            Solver<string, string> *solver = new ObjectAdapter(new BFS<Cell *>());
             CacheManager *file = new FileCacheManager(5);
             ClientHandler* clientHandler = new MyClientHandler(file, solver);
 
