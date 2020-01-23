@@ -23,9 +23,9 @@ namespace boot {
         void main(int port) {
 
             server_side::Server *server = new MySerialServer();
-            Solver<string, string> *solver = new ObjectAdapter(new AStar<Cell *>());
+            Solver<string, string> *solver = new ObjectAdapter(new BestFirstSearch<Cell *>());
             CacheManager *file = new FileCacheManager(5);
-            ClientHandler* clientHandler = new MyClientHandler(file, solver);
+            ClientHandler *clientHandler = new MyClientHandler(file, solver);
 
 //            //creates new server
 //            server_side::Server *server = new MySerialServer();

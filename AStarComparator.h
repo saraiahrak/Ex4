@@ -13,7 +13,8 @@ class AStarComparator {
 
 public:
     int operator()(State<T> *s1, State<T> *s2) {
-        return s1->getCost() + s1->getHeuristic() > s2->getCost() + s2->getHeuristic();
+        return s1->getTrailCost() + s1->getHeuristic() > s2->getTrailCost() + s2->getHeuristic();
+
     }
 };
 

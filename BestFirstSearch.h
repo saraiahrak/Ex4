@@ -21,6 +21,10 @@ public:
     priority_queue<State<T> *, vector<State<T> *>, StateComparator<T>> open;
     vector<State<T> *> visited;
 
+    BestFirstSearch<T> *clone() {
+        return new BestFirstSearch<T>;
+    }
+
     bool isVisited(State<T> *s) {
         for (State<T> *node : visited) {
             if (node->isEqual(s)) {
@@ -36,7 +40,6 @@ public:
 
         while (!open.empty()) {
             auto *temp = open.top();
-            storage.push_back(temp);
             if (s->isEqual(temp)) {
                 while (index < storage.size()) {
                     open.push(storage.at(index));
@@ -45,6 +48,7 @@ public:
                 storage.clear();
                 return true;
             }
+            storage.push_back(temp);
             open.pop();
         }
         while (index < storage.size()) {
@@ -52,6 +56,31 @@ public:
             index++;
         }
         return false;
+    }
+
+    void removeFromOpen(State<T> *s) {
+        vector<State<T> *> storage;
+        int index = 0;
+        bool flag = false;
+
+        while (!open.empty()) {
+            auto *temp = open.top();
+            if (s->isEqual(temp)) {
+                open.pop();
+                while (index < storage.size()) {
+                    open.push(storage.at(0));
+                    storage.erase(storage.begin());
+                }
+                storage.clear();
+                break;
+            }
+            storage.push_back(temp);
+            open.pop();
+        }
+        while (index < storage.size()) {
+            open.push(storage.at(index));
+            index++;
+        }
     }
 
     void initialize(Searchable<T> *s) {
@@ -135,9 +164,11 @@ public:
                     neighbor->setTrailCost(trail);
                     open.push(neighbor);
                 } else {
-                    if (trail < neighbor->getTrailCost()) {
+                    if (trail <= neighbor->getTrailCost()) {
                         neighbor->setTrailCost(trail);
                         neighbor->setPrev(current);
+                        removeFromOpen(neighbor);
+                        open.push(neighbor);
                     }
                 }
             }

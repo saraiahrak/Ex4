@@ -50,7 +50,6 @@ public:
 
         while (!open.empty()) {
             auto *temp = open.top();
-            storage.push_back(temp);
             if (s->isEqual(temp)) {
                 while (index < storage.size()) {
                     open.push(storage.at(index));
@@ -59,6 +58,7 @@ public:
                 storage.clear();
                 return true;
             }
+            storage.push_back(temp);
             open.pop();
         }
         while (index < storage.size()) {
@@ -108,6 +108,8 @@ public:
         State<T> *current = goal;
 
         while (current->getPrev()) {
+//            cout << "Rows: "<<current->getValue()->getRowPos() << " Cols: " << current->getValue()->getColPos() << endl;
+//            cout << "Value: " << current->getTrailCost() << endl;
             State<T> *prev = current->getPrev();
             path.insert(0, ")");
             path.insert(0, to_string(current->getTrailCost()));
@@ -167,6 +169,9 @@ public:
                     neighbor->setPrev(current);
                     open.push(neighbor);
                 }
+
+                neighbor->setTrailCost(trail);
+                neighbor->setPrev(current);
 
             }
         }
