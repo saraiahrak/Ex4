@@ -19,6 +19,9 @@ public:
     priority_queue<State<T> *, vector<State<T> *>, AStarComparator<T>> open;
     vector<State<T> *> closed;
 
+    AStar<T> *clone() {
+        return new AStar<T>();
+    }
 
     bool isVisited(State<T> *s) {
         for (State<T> *node : closed) {
@@ -148,20 +151,23 @@ public:
                 neighbor->setCost(neighbor->getValue()->getValue());
                 trail = current->getTrailCost() + neighbor->getCost();
                 if (isInOpen(neighbor)) {
-                    if (current->getTrailCost() < trail) {
+                    if (current->getTrailCost() <= trail) {
                         continue;
                     }
                 } else if (isVisited(neighbor)) {
-                    if (current->getTrailCost() < trail) {
+                    if (current->getTrailCost() <= trail) {
                         continue;
                     }
+                    neighbor->setTrailCost(trail);
+                    neighbor->setPrev(current);
                     open.push(neighbor);
                     removeFromClosed(neighbor);
                 } else {
+                    neighbor->setTrailCost(trail);
+                    neighbor->setPrev(current);
                     open.push(neighbor);
                 }
-                neighbor->setTrailCost(trail);
-                neighbor->setPrev(current);
+
             }
         }
 

@@ -5,12 +5,9 @@
 #ifndef EX4__BOOT_H_
 #define EX4__BOOT_H_
 
-//#include "MySerialServer.h"
-//#include "StringReverser.h"
-//#include "MyTestClientHandler.h"
+#include "MySerialServer.h"
 #include "FileCacheManager.h"
 #include "MyClientHandler.h"
-#include "MyParallelServer.h"
 #include "ObjectAdapter.h"
 #include "Solver.h"
 #include "BestFirstSearch.h"

@@ -15,6 +15,10 @@ public:
     CacheManager *cacheManager;
     Solver<string, string> *solver;
 
+    MyTestClientHandler *clone() {
+        return new MyTestClientHandler(this->cacheManager, this->solver->clone());
+    }
+
     MyTestClientHandler(CacheManager *c, Solver<string, string> *s);
 
     void handleClient(int clientSocket) override;

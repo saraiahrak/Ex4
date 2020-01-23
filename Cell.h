@@ -27,6 +27,10 @@ public:
 
     ~Cell() = default;
 
+    Cell* clone() {
+        return new Cell(this->position, this->value);
+    }
+
 private:
     pair<int, int> position;
 

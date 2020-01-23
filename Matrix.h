@@ -17,6 +17,10 @@ class Matrix : public Searchable<Cell *> {
 public:
     Matrix(vector<vector<int>> mat);
 
+    Matrix *clone() {
+        return new Matrix(this->intMat);
+    }
+
     State<Cell *> *getDestState() override;
 
     void initMatrix(vector<vector<int>> mat);
@@ -33,7 +37,7 @@ public:
 
     void setAllHeur();
 
-    int calculateHeur(State<Cell*>* s);
+    int calculateHeur(State<Cell *> *s);
 
     State<Cell *> *getInitialState() override;
 
@@ -59,6 +63,7 @@ private:
     int rows;
     int cols;
     vector<vector<Cell *>> matrix;
+    vector<vector<int>> intMat;
     vector<vector<State<Cell *> *>> states;
     State<Cell *> *initCell;
     State<Cell *> *destCell;

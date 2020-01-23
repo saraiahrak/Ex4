@@ -8,20 +8,20 @@
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include "Solver.h"
-#include "MySerialServer.h"
+
 
 class MyClientHandler : public ClientHandler {
 public:
-  CacheManager *cacheManager;
-  Solver<string, string> *solver;
+    CacheManager *cacheManager;
+    Solver<string, string> *solver;
 
-  MyClientHandler(CacheManager *c, Solver<string, string> *s);
+    MyClientHandler(CacheManager *c, Solver<string, string> *s);
 
-  void handleClient(int clientSocket) override;
+    void handleClient(int clientSocket) override;
 
-  ClientHandler* clone(){
-    return new MyClientHandler(this->cacheManager, this->solver->clone());
-  }
+    ClientHandler *clone() {
+        return new MyClientHandler(this->cacheManager, this->solver->clone());
+    }
 };
 
 

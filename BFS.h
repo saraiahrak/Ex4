@@ -19,8 +19,8 @@ template<typename T>
 class BFS : public Searcher<string, T> {
 public:
 
-    BFS* clone() {
-      return new BFS();
+    BFS<T> *clone() {
+        return new BFS<T>();
     }
 
     BFS<T>() = default;
@@ -50,7 +50,6 @@ public:
             pathVector.push_back(*prev);
             *prev = *prev->getPrev();
         }
-        pathVector.push_back(*prev);
 
         //initialize the solution to be empty
         string path = "";
@@ -59,8 +58,8 @@ public:
         int row = current.getValue()->getRowPos();
         int col = current.getValue()->getColPos();
 
+        int trailCost = prev->getCost();
         int i;
-        int trailCost = 0;
         //finds the direction for the path
         for (i = pathVector.size() - 2; i >= 0; i--) {
             State<T> next = pathVector.at(i);
@@ -100,6 +99,8 @@ public:
 
     //search the given problem
     string search(Searchable<T> *searchable) {
+
+
         queue<State<T> *> q;
         list<State<T> *> visited;
         State<T> *current;

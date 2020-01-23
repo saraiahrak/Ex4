@@ -5,6 +5,7 @@
 #include "Matrix.h"
 
 Matrix::Matrix(vector<vector<int>> mat) {
+    this->intMat = mat;
     this->rows = mat.size();
     this->cols = mat.at(0).size();
     initMatrix(mat);
@@ -66,11 +67,11 @@ vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState
     }
 
     auto iter = neighbors.begin();
-    for (State<Cell *> *neighbor : neighbors) {
-        if (neighbor->getValue()->getValue() == -1) {
-            neighbors.erase(iter);
+    for (int i = 0; i < neighbors.size(); i++) {
+        if (neighbors.at(i)->getValue()->getValue() == -1) {
+            neighbors.erase(iter + i);
+            i--;
         }
-        iter++;
     }
 
     return neighbors;

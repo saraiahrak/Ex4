@@ -11,11 +11,6 @@ ObjectAdapter::ObjectAdapter(Searcher<string, Cell *> *s) {
     this->searcher = s;
 }
 
-ObjectAdapter::ObjectAdapter(string i, string d) {
-  this->initial = i;
-  this->dest = d;
-}
-
 
 string ObjectAdapter::solve(string problem) {
     return searcher->search(createSearchable(problem));
