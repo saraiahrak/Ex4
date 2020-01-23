@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//declaration
 bool MySerialServer::isStop;
 
 MySerialServer::MySerialServer() {
