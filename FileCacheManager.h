@@ -16,17 +16,21 @@ using namespace std;
 
 class FileCacheManager : public CacheManager {
 public:
+    //maps a problem string to a unique sequence of numbers
     hash<string> hashFunc;
     int cap;
     list <string> keyList;
     unordered_map<string, pair<string, list<string>::iterator>> myCache;
 
+    //constructor
     explicit FileCacheManager(int capacity) {
         cap = capacity;
     }
 
+    //destructor
     ~FileCacheManager() = default;
 
+    //apply a lambada function to all objects in cache
     void foreach(const function<void(string &)> f) override {
         for (const string &problem: keyList) {
             string solution = myCache[problem].first;
@@ -34,6 +38,7 @@ public:
         }
     }
 
+    //get the solution from cache/ files given problem
     string getSolution(string problem) override {
         fileLock.lock();
         string solution;
@@ -50,6 +55,7 @@ public:
         return solution;
     }
 
+    //insert a new [problem, solution]
     void insert(string problem, string solution) override {
         cacheLock.lock();
         if (fullCapacity()) {
@@ -60,10 +66,11 @@ public:
         cacheLock.unlock();
     }
 
+    //check if problem exists in cache
     bool existsInCache(string problem) override {
         return myCache.find(problem) != myCache.end();
     }
-
+    //check if problem exists in files
     bool existsInFiles(string problem) override {
         string filename = to_string(hashFunc(problem)) + ".txt";
         fstream file{filename, ios::in};
@@ -74,6 +81,7 @@ public:
         return false;
     }
 
+    //get solution from files
     string getFromFiles(string problem) override {
         string solution;
         string filename = to_string(hashFunc(problem)) + ".txt";
@@ -96,16 +104,19 @@ public:
         return solution;
     }
 
+    //get solution from cache
     string getFromCache(string problem) override {
         moveToFront(problem);
         return myCache[problem].first;
     }
 
+    //insert a [problem, solution] to cache
     void insertToCache(string problem, string solution) override {
         keyList.push_front(problem);
         myCache[problem] = pair<string, list<string>::iterator>(solution, keyList.begin());
     }
 
+    //write to file
     void writeToFile(string problem, string solution) override {
         string filename = to_string(hashFunc(problem)) + ".txt";
         fstream file{filename, ios::out};
@@ -117,10 +128,13 @@ public:
         file.close();
     }
 
+    //check if cache is at full capacity
     bool fullCapacity() override {
         return myCache.size() == (unsigned) cap;
     }
 
+
+    //move a problem to front of cache
     void moveToFront(string problem) override {
         auto it = myCache.find(problem);
         keyList.remove(problem);
@@ -130,6 +144,7 @@ public:
         }
     }
 
+    //remove from cache
     void removeFromCache() override {
         string problem = keyList.back();
         myCache.erase(problem);
@@ -137,6 +152,8 @@ public:
     }
 
 private:
+
+    //mutexes for parallel access to cache and files
     mutex fileLock;
 
     mutex cacheLock;

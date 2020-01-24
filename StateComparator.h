@@ -11,8 +11,11 @@ template<typename T>
 class StateComparator {
 
 public:
-    //comparator between to states
-    int operator()(State<T> *s1, State<T> *s2) {
+    /**
+        * overriding the operator method used for priority queue
+        * to be used for logic of order in the BestFS algorithm, according to the
+        * trail cost.
+        * */    int operator()(State<T> *s1, State<T> *s2) {
         return s1->getTrailCost() > s2->getTrailCost();
     }
 };

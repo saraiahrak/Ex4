@@ -4,6 +4,8 @@
 
 #include "Matrix.h"
 
+
+//constructor- initializes a matrix and it's cells and states
 Matrix::Matrix(vector<vector<int>> mat) {
     this->intMat = mat;
     this->rows = mat.size();
@@ -14,6 +16,7 @@ Matrix::Matrix(vector<vector<int>> mat) {
     setAllHeur();
 }
 
+//initialize a matrix given a matrix vector
 void Matrix::initMatrix(vector<vector<int> > mat) {
     vector<vector<Cell *>> cells;
     vector<Cell *> cellRow;
@@ -39,14 +42,17 @@ void Matrix::initMatrix(vector<vector<int> > mat) {
     this->states = allStates;
 }
 
+//check if a given state is the goal state
 bool Matrix::isGoalState(State<Cell *> *s) {
     return s->isEqual(this->destCell);
 }
 
+//get a cell according to position
 Cell *Matrix::getCell(int row, int col) {
     return this->matrix.at(row).at(col);
 }
 
+//get all possible "next" state (neighbors) given a state
 vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState) {
 
     vector<State<Cell *> *> neighbors;
@@ -66,6 +72,7 @@ vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState
         neighbors.push_back(this->getState(row - 1, col));
     }
 
+    //remove all infinity cells
     auto iter = neighbors.begin();
     for (int i = 0; i < neighbors.size(); i++) {
         if (neighbors.at(i)->getValue()->getValue() == -1) {
@@ -77,36 +84,44 @@ vector<State<Cell *> *> Matrix::getAllPossibleStates(State<Cell *> *currentState
     return neighbors;
 }
 
+//get the initial state of the searchable matrix
 State<Cell *> *Matrix::getInitialState() {
     return this->initCell;
 }
 
+//set the initial state to begin the search
 void Matrix::setInitialState(int row, int col) {
     this->initCell = getState(row, col);
 }
 
+//set a new search given the initial and destination states positions
 void Matrix::setNewSearch(int initRow, int initCol, int destRow, int destCol) {
     setInitialState(initRow, initCol);
     setDestState(destRow, destCol);
 }
 
+//set destination given the position
 void Matrix::setDestState(int row, int col) {
     this->destCell = getState(row, col);
     setAllHeur();
 }
 
+//get the matrix
 vector<vector<Cell *> > Matrix::getMatrix() {
     return this->matrix;
 }
 
+//get number of columns
 int Matrix::getColNum() {
     return this->cols;
 }
 
+//get number of rows
 int Matrix::getRowNum() {
     return this->rows;
 }
 
+//get the destination state
 State<Cell *> *Matrix::getDestState() {
     return this->destCell;
 }
@@ -121,6 +136,7 @@ bool Matrix::isUnBlocked(int r, int c) {
     return (matrix.at(r).at(c)->getValue() != -1);
 }
 
+//convert to string
 string Matrix::to_string() {
     string mat = "";
     int index = 0;
@@ -140,10 +156,12 @@ string Matrix::to_string() {
     return mat;
 }
 
+//get a state given it's position in matrix
 State<Cell *> *Matrix::getState(int row, int col) {
     return this->states.at(row).at(col);
 }
 
+//set all heuristic values of states
 void Matrix::setAllHeur() {
     for (auto row : states) {
         for (auto state : row) {
@@ -152,6 +170,7 @@ void Matrix::setAllHeur() {
     }
 }
 
+//set heuristic value of given state according to Grid optimal function- Manhattan Distance
 int Matrix::calculateHeur(State<Cell *> *s) {
     int dx = this->destCell->getValue()->getColPos() - s->getValue()->getColPos();
     int dy = this->destCell->getValue()->getRowPos() - s->getValue()->getRowPos();

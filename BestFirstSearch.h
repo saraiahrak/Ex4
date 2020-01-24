@@ -16,6 +16,8 @@
 using namespace std;
 
 template<typename T>
+
+//Best First Search algorithm
 class BestFirstSearch : public Searcher<string, T> {
 public:
 
@@ -23,18 +25,22 @@ public:
     priority_queue<State<T> *, vector<State<T> *>, StateComparator<T>> open;
     vector<State<T> *> visited;
 
+    //constructor
     BestFirstSearch<T>() {
         this->id = "BestFS";
     }
 
-
+    //get the name of the algorithm
     string getId() {
         return this->id;
     }
+
+    //deep clone the algorithm
     BestFirstSearch<T> *clone() {
         return new BestFirstSearch<T>;
     }
 
+    //check if the given state was already explored- and is in the visited vector
     bool isVisited(State<T> *s) {
         for (State<T> *node : visited) {
             if (node->isEqual(s)) {
@@ -44,6 +50,7 @@ public:
         return false;
     }
 
+    //check if the given state is in the open queue
     bool isInOpen(State<T> *s) {
         vector<State<T> *> storage;
         int index = 0;
@@ -68,6 +75,7 @@ public:
         return false;
     }
 
+    //remove a given state from the open queue
     void removeFromOpen(State<T> *s) {
         vector<State<T> *> storage;
         int index = 0;
@@ -93,6 +101,7 @@ public:
         }
     }
 
+    //initialize the search
     void initialize(Searchable<T> *s) {
         State<T> *first = s->getInitialState();
         first->setCost(first->getValue()->getValue());
@@ -100,6 +109,7 @@ public:
         open.push(first);
     }
 
+    //get the direction of movement in the algorithm given a current and it's previous state
     string getDirection(State<T> *current, State<T> *prev) {
 
         string direction;
@@ -126,6 +136,7 @@ public:
 
     }
 
+    //construct the path of the algorithm from the last state going back to the first
     string constructPath(State<T> *goal) {
         string path;
 
@@ -146,35 +157,45 @@ public:
         return path;
     }
 
-
+    //main search algorithm
     string search(Searchable<T> *searchable) {
         State<T> *current;
         initialize(searchable);
         vector<State<T> *> neighbors;
         int trail;
         while (!open.empty()) {
+            //get the top state of the open priority queue
             current = open.top();
             visited.push_back(current);
             open.pop();
 
+            //if current is the goal state, return the path
             if (searchable->isGoalState(current)) {
                 return constructPath(current);
             }
 
+            //get the neighbor states of the current state
             neighbors = searchable->getAllPossibleStates(current);
 
+            //iterate over the neighbors
             for (State<T> *neighbor : neighbors) {
+                //if we already explored the state, continute to next neighbor
                 if (isVisited(neighbor)) {
                     continue;
                 }
+                //set the cost and calculate the trail cost
                 neighbor->setCost(neighbor->getValue()->getValue());
                 trail = current->getTrailCost() + neighbor->getCost();
+                //if we never encountered the state
                 if (!isInOpen(neighbor) && !isVisited(neighbor)) {
+                    //set the values, push to open queue
                     neighbor->setPrev(current);
                     neighbor->setTrailCost(trail);
                     open.push(neighbor);
                 } else {
+                    //if we found a better trail
                     if (trail <= neighbor->getTrailCost()) {
+                        //set the trail to the new trail, set the prev
                         neighbor->setTrailCost(trail);
                         neighbor->setPrev(current);
                         removeFromOpen(neighbor);
@@ -186,6 +207,7 @@ public:
         }
     }
 
+    //destructor
     ~BestFirstSearch() = default;
 };
 

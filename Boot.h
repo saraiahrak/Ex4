@@ -25,7 +25,7 @@ namespace boot {
 
             server_side::Server *server = new MyParallelServer();
             //the best algorithm for matrix problem
-            Solver<string, string> *solver = new ObjectAdapter(new DFS<Cell *>());
+            Solver<string, string> *solver = new ObjectAdapter(new AStar<Cell *>());
             CacheManager *file = new FileCacheManager(5);
             ClientHandler *clientHandler = new MyClientHandler(file, solver);
 

@@ -27,6 +27,7 @@ public:
 
     ~Cell() = default;
 
+    //deep clone a cell
     Cell* clone() {
         return new Cell(this->position, this->value);
     }

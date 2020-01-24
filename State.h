@@ -6,10 +6,11 @@
 #define EX4_STATE_H
 
 
+//class state
 template<class T>
-
 class State {
 public:
+    //constructor- wraps a given object of generic type T
     explicit State<T>(T st) {
         this->value = st;
         this->trailCost = 0;
@@ -19,6 +20,7 @@ public:
         this->prev = nullptr;
     }
 
+    //deep clone
     State<T>* clone() {
         return new State<T>(this->value->clone());
     }
@@ -51,9 +53,11 @@ public:
         return this->prev;
     }
 
+    //compare states according to object value
     bool isEqual(State<T> *s) {
         return value->isEqual(s->value);
     }
+
 
     T getValue() {
         return this->value;
