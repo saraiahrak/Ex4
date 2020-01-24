@@ -18,7 +18,7 @@ public:
 
     virtual string getSolution(string key) = 0;
 
-    virtual void insert(string key, string obj) = 0;
+    virtual void insert(string problem, string obj) = 0;
 
     virtual bool existsInCache(string key) = 0;
 

@@ -49,3 +49,11 @@ vector<vector<int>> ObjectAdapter::createVector(string problem) {
 
     return matrix;
 }
+
+string ObjectAdapter::getName() {
+    return this->searcher->getId();
+}
+
+Searcher<string, Cell *> * ObjectAdapter::getSearcher() {
+    return this->searcher;
+}

@@ -28,15 +28,6 @@ namespace boot {
             CacheManager *file = new FileCacheManager(5);
             ClientHandler *clientHandler = new MyClientHandler(file, solver);
 
-//            //creates new server
-//            server_side::Server *server = new MySerialServer();
-//            //creates a new solver
-//            Solver<string, string> *solver = new StringReverser();
-//            //creates cache manager file
-//            CacheManager *file = new FileCacheManager(5);
-//            //creates new handler
-//            ClientHandler *clientHandler = new MyTestClientHandler(file, solver);
-
             //open the connection and solve problems
             server->open(port, clientHandler);
         }

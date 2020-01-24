@@ -15,7 +15,7 @@ class ObjectAdapter : public Solver<string, string> {
 public:
     string initial;
     string dest;
-    Searcher<string, Cell*> * searcher;
+    Searcher<string, Cell *> *searcher;
 
     ObjectAdapter(Searcher<string, Cell *> *s);
 
@@ -27,8 +27,12 @@ public:
 
     ~ObjectAdapter() = default;
 
-    ObjectAdapter* clone() {
-      return new ObjectAdapter(this->searcher->clone());
+    Searcher<string, Cell *> *getSearcher();
+
+    string getName();
+
+    ObjectAdapter *clone() {
+        return new ObjectAdapter(this->searcher->clone());
     }
 };
 

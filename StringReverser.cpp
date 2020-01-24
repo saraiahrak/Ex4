@@ -18,4 +18,10 @@ string StringReverser::solve(string problem) {
     return solution;
 }
 
-StringReverser::StringReverser() = default;
+StringReverser::StringReverser() {
+    this->id = "Reverse";
+}
+
+string StringReverser::getName() {
+    return this->id;
+}

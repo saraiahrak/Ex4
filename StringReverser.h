@@ -19,11 +19,16 @@ public:
 
     ~StringReverser() = default;
 
+    string getName() override;
+
     string solve(string s) override;
 
-    StringReverser* clone() {
+    StringReverser* clone() override {
         return new StringReverser();
     }
+
+private:
+    string id;
 };
 
 #endif //EX4__STRINGREVERSER_H_

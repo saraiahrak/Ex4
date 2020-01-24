@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <iostream>
+#include <mutex>
 
 using namespace std;
 
@@ -27,15 +28,17 @@ public:
     ~FileCacheManager() = default;
 
     void foreach(const function<void(string &)> f) override {
-        for (const string& problem: keyList) {
+        for (const string &problem: keyList) {
             string solution = myCache[problem].first;
             f(solution);
         }
     }
 
     string getSolution(string problem) override {
+        fileLock.lock();
         string solution;
         if (!existsInCache(problem) && !existsInFiles(problem)) {
+            fileLock.unlock();
             throw "Object could not be found";
         }
         if (existsInCache(problem)) {
@@ -43,15 +46,18 @@ public:
         } else if (existsInFiles(problem)) {
             solution = getFromFiles(problem);
         }
+        fileLock.unlock();
         return solution;
     }
 
     void insert(string problem, string solution) override {
+        cacheLock.lock();
         if (fullCapacity()) {
             removeFromCache();
         }
         insertToCache(problem, solution);
         writeToFile(problem, solution);
+        cacheLock.unlock();
     }
 
     bool existsInCache(string problem) override {
@@ -87,7 +93,6 @@ public:
         } else {
             moveToFront(problem);
         }
-
         return solution;
     }
 
@@ -131,6 +136,10 @@ public:
         keyList.pop_back();
     }
 
+private:
+    mutex fileLock;
+
+    mutex cacheLock;
 };
 
 

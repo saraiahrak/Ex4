@@ -57,13 +57,14 @@ void MyClientHandler::handleClient(int clientSocket) {
         }
 
         //search or solve the solution
+        string name = problem + this->solver->getName();
         try {
-            solution = cacheManager->getSolution(problem);
+            solution = cacheManager->getSolution(name);
         } catch (const char *e) {
             //solve the new problem
             solution = solver->solve(problem);
             //insert the new problem and his solution to the cache manager
-            cacheManager->insert(problem, solution);
+            cacheManager->insert(name, solution);
         }
         //sending the solution to the client
         int is_sent = write(clientSocket, solution.c_str(), solution.length());

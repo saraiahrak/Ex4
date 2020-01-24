@@ -16,6 +16,8 @@ class Searcher {
 public:
     virtual S search(Searchable<T> *searchable) = 0;
 
+    virtual string getId() = 0;
+
     virtual Searcher* clone() = 0;
 };
 

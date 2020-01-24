@@ -19,11 +19,19 @@ template<typename T>
 class BFS : public Searcher<string, T> {
 public:
 
+    string id;
+
     BFS<T> *clone() {
         return new BFS<T>();
     }
 
-    BFS<T>() = default;
+    BFS<T>() {
+        this->id = "BFS";
+    }
+
+    string getId() {
+        return this->id;
+    }
 
     //search if the current cell was visited and return true, else false
     bool wasVisited(State<T> *current, list<State<T> *> visited) {

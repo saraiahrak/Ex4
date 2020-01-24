@@ -16,8 +16,17 @@ template<typename T>
 class AStar : public Searcher<string, T> {
 public:
 
+    string id;
     priority_queue<State<T> *, vector<State<T> *>, AStarComparator<T>> open;
     vector<State<T> *> closed;
+
+    AStar<T>() {
+        this->id = "AStar";
+    }
+
+    string getId() {
+        return this->id;
+    }
 
     AStar<T> *clone() {
         return new AStar<T>();

@@ -18,9 +18,19 @@ using namespace std;
 template<typename T>
 class BestFirstSearch : public Searcher<string, T> {
 public:
+
+    string id;
     priority_queue<State<T> *, vector<State<T> *>, StateComparator<T>> open;
     vector<State<T> *> visited;
 
+    BestFirstSearch<T>() {
+        this->id = "BestFS";
+    }
+
+
+    string getId() {
+        return this->id;
+    }
     BestFirstSearch<T> *clone() {
         return new BestFirstSearch<T>;
     }

@@ -18,7 +18,16 @@ template<typename T>
 
 class DFS : public Searcher<string, T> {
 public:
-    DFS<T>() = default;
+
+    string id;
+
+    DFS<T>() {
+        this->id = "DFS";
+    }
+
+    string getId() {
+        return this->id;
+    }
 
     DFS<T> *clone() {
         return new DFS<T>();
