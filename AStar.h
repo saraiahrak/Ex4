@@ -6,8 +6,8 @@
 #define EX4_ASTAR_H
 
 #include "Searcher.h"
-#include <queue>
 #include "AStarComparator.h"
+#include <queue>
 
 using namespace std;
 
@@ -117,8 +117,6 @@ public:
         State<T> *current = goal;
 
         while (current->getPrev()) {
-//            cout << "Rows: "<<current->getValue()->getRowPos() << " Cols: " << current->getValue()->getColPos() << endl;
-//            cout << "Value: " << current->getTrailCost() << endl;
             State<T> *prev = current->getPrev();
             path.insert(0, ")");
             path.insert(0, to_string(current->getTrailCost()));

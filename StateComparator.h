@@ -11,6 +11,7 @@ template<typename T>
 class StateComparator {
 
 public:
+    //comparator between to states
     int operator()(State<T> *s1, State<T> *s2) {
         return s1->getTrailCost() > s2->getTrailCost();
     }

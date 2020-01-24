@@ -8,14 +8,7 @@
 
 using namespace std;
 
-/**
- * Utils class
- * Util methods for program
- **/
-
-/*
-delete the spaces on the beginning of the string
-*/
+//delete the spaces on the beginning of the string
 string Utils::lstrip(string s) {
   while (s.at(0) == ' ') {
     s.erase(s.begin());
@@ -23,9 +16,8 @@ string Utils::lstrip(string s) {
   return s;
 }
 
-/*
-delete the spaces on the end of the string
-*/
+
+//delete the spaces on the end of the string
 string Utils::rstrip(string s) {
   while (s.at(s.length() - 1) == ' ') {
     s.erase(s.end() - 1);
@@ -37,9 +29,8 @@ string Utils::rstrip(string s) {
   return s;
 }
 
-/*
-returns the string without spaces
-*/
+
+//returns the string without spaces
 string Utils::strip(string s) {
   string trimmed;
   // delete from the beginning and the end of the string
@@ -48,9 +39,8 @@ string Utils::strip(string s) {
   return trimmed;
 }
 
-/*
-split the words of a string by delimeter
-*/
+
+//split the words of a string by delimeter
 vector<string> Utils::splitByDelim(string params, const char *delim) {
   vector<string> v;
   char *ch = nullptr;
@@ -70,9 +60,8 @@ vector<string> Utils::splitByDelim(string params, const char *delim) {
   return v;
 }
 
-/*
-deleted the apostrophe that we added from the string
-*/
+
+//deleted the apostrophe that we added from the string
 string Utils::trimApostrophe(string &s) {
   int length = s.length();
   s.erase(0, 1);

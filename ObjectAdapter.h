@@ -25,6 +25,7 @@ public:
 
     string solve(string problem) override;
 
+    //Default destructor
     ~ObjectAdapter() = default;
 
     Searcher<string, Cell *> *getSearcher();

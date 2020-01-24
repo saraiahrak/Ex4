@@ -39,10 +39,6 @@ public:
         return this->heuristic;
     }
 
-    int getDistance() {
-        return this->distance;
-    }
-
     void setHeuristic(int heur) {
         this->heuristic = heur;
     }

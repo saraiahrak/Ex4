@@ -25,6 +25,7 @@ public:
 
     virtual State<T>* getDestState() = 0;
 
+    //duplicate
     virtual Searchable<T>* clone() = 0;
 
 };

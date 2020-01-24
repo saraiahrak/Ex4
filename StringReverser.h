@@ -17,6 +17,7 @@ public:
     //Constructor
     StringReverser();
 
+    //Default destructor
     ~StringReverser() = default;
 
     string getName() override;

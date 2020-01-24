@@ -102,7 +102,6 @@ public:
     if (path == "") {
       throw;
     }
-    cout << "trailCost: " + to_string(trailCost) << endl;
     return path;
   }
 
@@ -150,7 +149,6 @@ public:
         //find the directions of the path
         try {
             string path = findPath(visited, current, searchable);
-            cout << "number of vertices: " + to_string(verticesCounter) << endl;
             return path;
         } catch (const char *e) {
             return "Path didn't found";
